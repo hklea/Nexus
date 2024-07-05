@@ -1,5 +1,5 @@
 function App() {
-  return <></>;
+  return <>Prova</>;
 }
 
 export default App;
