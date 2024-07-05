@@ -1,5 +1,5 @@
 function App() {
-  return <>jksddjs</>;
+  return <></>;
 }
 
 export default App;
