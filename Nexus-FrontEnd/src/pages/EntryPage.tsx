@@ -1,5 +1,6 @@
 import Services from "../components/Services";
 import ProjectIdea from "../components/ProjectIdea";
+import PageFooter  from "../components/PageFooter";
 
 function EntryPage() {
   return (
@@ -8,7 +9,9 @@ function EntryPage() {
       <div className="h-[500px] flex items-center justify-center text-center">
         <ProjectIdea />
       </div>
-      <div>Prova Klea</div>
+      <div>
+        <PageFooter/>
+      </div>
     </div>
   );
 }
