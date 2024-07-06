@@ -1,6 +1,6 @@
-import { Feature } from "../../types/feature";
+import { Feature } from "../../types/serviceType";
 
-const featuresData: Feature[] = [
+const ServicesData: Feature[] = [
   {
     id: 1,
     icon: (
@@ -92,4 +92,4 @@ const featuresData: Feature[] = [
       "We provide strategic advice, implementation support, and ongoing management to optimize your technology investments.",
   },
 ];
-export default featuresData;
+export default ServicesData;
