@@ -1,13 +1,14 @@
-import Services from "../components/Services";
-import ProjectIdea from "../components/ProjectIdea";
+import Features from "../components/Features";
 
 function EntryPage() {
   return (
     <div>
-      <Services />
-      <div className="h-[500px] flex items-center justify-center text-center">
-        <ProjectIdea />
-      </div>
+      <div>Prova</div>
+      <div>Prova</div>
+      
+    <div><Features/></div>
+    <div></div>
+    <div>Prova</div>
     </div>
   );
 }

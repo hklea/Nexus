@@ -35,23 +35,9 @@ function Services() {
   ];
 
   return (
-    <div className="bg-[#c3d0da]">
-      <p>lol</p>
-      <p>lol2</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4  p-[5%] pl-[8%] pr-[8%]">
-        {BoxInformation.map((item, index) => (
-          <div
-            key={index}
-            className="bg-gray-200 p-4 pl-8 pr-8 h-[200px] rounded-xl sm:h-[300px] md:h-[350px] lg:h-[250px]"
-          >
-            <div className="h-[45px]">
-              <LanguageIcon className="h-[45px] text-red-700 text-[100px]" />
-            </div>
-            <div className="h-[10%]">{item.title}</div>
-            <div className="mt-[10px] h-[58%]">{item.text}</div>
-          </div>
-        ))}
-      </div>
+    <div className="bg-[#C3D0DA] relative pl-[10%] pr-[10%] pt-[60px] pb-[60px]">
+      <div className="bg-red-600 h-[60px]">test</div>
+      <div className="bg-black">prova</div>
     </div>
   );
 }
