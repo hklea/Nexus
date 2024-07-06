@@ -8,6 +8,7 @@ function EntryPage() {
       <div className="h-[500px] flex items-center justify-center text-center">
         <ProjectIdea />
       </div>
+      <div>Prova Klea</div>
     </div>
   );
 }
