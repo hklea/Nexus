@@ -3,7 +3,7 @@ import PaperPlane from "../assets/Icons/EntryPage/PaperPlane.png";
 function ProjectIdea() {
   return (
     <div className="bg-[#181818] w-[90%] sm:w-[80%] md:w-[70%] h-[280px] lg:h-[210px] rounded-[50px] p-[17px] lg:py-[40px] py-[30px] lg:px-[50px] lg:flex lg:align-middle xl:pl-[80px]">
-      <div className=" h-full text-left flex flex-col lg:flex-row">
+      <div className=" h-full text-left flex flex-col lg:flex-row lg:w-[93%]">
         <div className="flex justify-center mt-[20px]">
           <img
             src={PaperPlane}
@@ -12,7 +12,7 @@ function ProjectIdea() {
           />
 
           <div className="text-[13px] ml-[20px] text-white">
-            <div className="text-white text-[19px] xs:text-[24px] md:text-[27px] font-bold mb-[5px] md:tracking-wider lg:tracking-normal lg:whitespace-nowrap">
+            <div className="text-white text-[19px] xs:text-[24px] md:text-[27px] font-bold mb-[5px] md:tracking-wider lg:tracking-normal xl:tracking-widest lg:whitespace-nowrap">
               Have any project Idea?
             </div>
             <div className="text-[#E6E6E6] text-[12] md:text-[14px] w-[90%]">
