@@ -1,0 +1,24 @@
+.footer-section h3 {
+    font-size: 18px; /* Smaller text size in pixels for headings */
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: white;
+}
+
+.footer-section ul li {
+    font-size: 14px; /* Smaller text size in pixels for list items */
+    color: #B0B0B0; /* Lighter gray for text color */
+}
+
+.footer-section {
+    margin-top: 20px; /* Move the elements lower */
+}
+
+.footer-bottom {
+    margin-top: 40px; /* Additional space for the bottom section */
+    text-align: center;
+    color: #999999; /* Lighter gray for bottom text */
+    font-size: 14px; /* Adjust the bottom text size */
+}
+
+
