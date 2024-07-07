@@ -2,8 +2,8 @@ import '../style/PageFooter.css';
 function PageFooter() {
     return (
         <footer className="bg-gradient-to-r from-zinc-900 to-stone-950 py-12">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-                <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                     {/* About Us */}
                     <div className="footer-section px-2">
                         <h3 className="text-lg font-bold mb-2 text-white">About Us</h3>
