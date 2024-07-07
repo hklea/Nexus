@@ -21,4 +21,20 @@
     font-size: 14px; /* Adjust the bottom text size */
 }
 
+.limited-hr {
+    width: 80%;  /* Adjust this value to limit the width */
+    margin: 0 auto;  /* Center the hr */
+    border: 1px solid #3b3b3b;  /* Optional: Customize the border style, color, and width */
+  }
+  
+  .rights{
+    text-align: center;
+    color: #999999;
+    font-size: 14px;
+  }
 
+  .limited-hr {
+    width: 50%;
+    margin: 0 auto;
+    border: 1px solid #000;
+}
