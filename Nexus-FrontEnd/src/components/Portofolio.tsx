@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../style/Portfolio.css'; // Import your CSS file for styling if needed
-import img1 from '../assets/images/i1.jpeg';
+import img1 from "../assets/Images/i1.jpeg";
 function Portfolio() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const portfolioItems = [
@@ -12,7 +12,6 @@ function Portfolio() {
         { image: img1, description: 'Project 6 Description' },
         { image: img1, description: 'Project 7 Description' },
         { image: img1, description: 'Project 8 Description' },
-        // Add more items as needed
     ];
 
     const goToPreviousSlide = () => {
