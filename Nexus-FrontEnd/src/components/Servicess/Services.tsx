@@ -19,7 +19,7 @@ const Services = () => {
           </div>
 
           <div className="container sm:pl-[90px] sm:pr-[90px] mt-[30px]">
-            <div className=" grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-3">
+            <div className=" grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
               {ServiceData.map((feature) => (
                 <SingleService key={feature.id} feature={feature} />
               ))}

@@ -8,7 +8,9 @@ import Contact from "../components/Contact";
 function EntryPage() {
   return (
     <div>
-      <div className="h-[300px]">Provaaaa</div>
+      <br />
+      <br />
+      <br />
       <div>
         <OurStory />
       </div>
@@ -23,11 +25,8 @@ function EntryPage() {
         <Portofolio />
       </div>
 
-      <div>
-        <Contact/>
-      </div>
+      {/* <div><Contact/></div> */}
 
-      
       <div>
         <PageFooter />
       </div>
