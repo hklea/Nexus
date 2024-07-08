@@ -2,7 +2,7 @@ import { ServiceType } from "../../types/serviceType";
 import { useState } from "react";
 
 const SingleService = ({ feature }: { feature: ServiceType }) => {
-  const { icon, title, paragraph } = feature;
+  const { icon2 ,icon , title, paragraph } = feature;
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -21,7 +21,7 @@ const SingleService = ({ feature }: { feature: ServiceType }) => {
     >
       <div className={`relative ${isHovered ? "text-white" : ""}`}>
         <div className="mb-[5px] mt-[10px] flex h-[70px] w-[70px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
-          {icon}
+          {isHovered ? icon2 : icon}
         </div>
         <h3
           className={`ml-[2px] mb-[7px] text-xl font-semibold ${
