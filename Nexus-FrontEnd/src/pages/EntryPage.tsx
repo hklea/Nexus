@@ -3,6 +3,7 @@ import ProjectIdea from "../components/ProjectIdea";
 import PageFooter from "../components/PageFooter";
 import Portofolio from "../components/Portofolio";
 import OurStory from "../components/OurStory";
+import Contact from "../components/Contact";
 
 function EntryPage() {
   return (
@@ -21,14 +22,12 @@ function EntryPage() {
       <div>
         <Portofolio />
       </div>
-      <br />
-      <br />
-      <br />
-      <div>Era</div>
 
-      <br />
-      <br />
-      <br />
+      <div>
+        <Contact/>
+      </div>
+
+      
       <div>
         <PageFooter />
       </div>
