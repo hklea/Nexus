@@ -1,6 +1,6 @@
 import  { useState } from 'react';
 import '../style/Portfolio.css'; // Import your CSS file for styling if needed
-import img1 from "../assets/Images/i1.jpeg";
+import img1 from "../assets/images/i1.jpeg";
 function Portfolio() {
     const [currentSlide] = useState(0);// const [currentSlide, setCurrentSlide] = useState(0);
     const portfolioItems = [

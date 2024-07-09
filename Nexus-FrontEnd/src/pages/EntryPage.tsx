@@ -25,7 +25,7 @@ function EntryPage() {
         <Portofolio />
       </div>
 
-      {/* <div><Contact/></div> */}
+      <div><Contact/></div>
 
       <div>
         <PageFooter />

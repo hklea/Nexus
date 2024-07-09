@@ -150,7 +150,7 @@ const Contact = () => {
 
     // Prepare form data for submission to Web3Forms
     const formData = new FormData();
-    formData.append('access_key', 'YOUR_ACCESS_KEY_HERE');
+    formData.append('access_key', 'e49f762c-70ee-447f-957f-20d855bcdccf');//e49f762c-70ee-447f-957f-20d855bcdccf
     formData.append('fullName', fullName);
     formData.append('email', email);
     formData.append('phone', phone);
