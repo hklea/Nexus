@@ -28,9 +28,12 @@ function EntryPage() {
       <div>
         <Portofolio />
       </div>
+]
+      <div><Contact/></div>
+
 
       {/* <div><Contact/></div> */}
-
+\
       <div>
         <PageFooter />
       </div>
