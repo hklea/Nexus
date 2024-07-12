@@ -24,7 +24,6 @@ function EntryPage() {
       <div>
         <Portofolio />
       </div>
-
       <div><Contact/></div>
 
       <div>

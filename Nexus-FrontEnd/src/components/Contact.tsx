@@ -1,4 +1,3 @@
-
 // import { useState } from 'react';
 // import '../style/contact.css';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,18 +9,23 @@
 //   const [phone, setPhone] = useState('');
 //   const [company, setCompany] = useState('');
 //   const [message, setMessage] = useState('');
+//   const [submitting, setSubmitting] = useState(false);
+//   const [submitted, setSubmitted] = useState(false);
 
 //   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 //     e.preventDefault();
 
 //     // Prepare form data for submission to Web3Forms
 //     const formData = new FormData();
-//     formData.append('access_key', 'e49f762c-70ee-447f-957f-20d855bcdccf');
+//     formData.append('access_key', 'e49f762c-70ee-447f-957f-20d855bcdccf');//e49f762c-70ee-447f-957f-20d855bcdccf
 //     formData.append('fullName', fullName);
 //     formData.append('email', email);
 //     formData.append('phone', phone);
 //     formData.append('company', company);
 //     formData.append('message', message);
+
+//     // Set submitting state to true to show loading indicator
+//     setSubmitting(true);
 
 //     // Submit form data to Web3Forms API endpoint
 //     fetch('https://api.web3forms.com/submit', {
@@ -38,11 +42,14 @@
 //         setPhone('');
 //         setCompany('');
 //         setMessage('');
+//         setSubmitted(true); // Set submitted state to true
+//         setSubmitting(false); // Set submitting state to false
 //         console.log('Form submitted successfully');
 //       })
 //       .catch(error => {
 //         console.error('Error submitting form:', error);
 //         // Handle error state or display an error message to the user
+//         setSubmitting(false); // Set submitting state to false
 //       });
 //   };
 
@@ -52,7 +59,10 @@
 //         <label>CONTACT</label>
 //         <p className='left-text' style={{fontSize:30}}>Contact Us. It's Easy.</p>
 //         <br />
-//         <p>We'd love to hear from you! Whether you have a question about our services, need assistance, or just want to provide feedback, feel free to reach out.</p>
+//         <p>We'd love to hear from you! Whether you have a question about
+//           <br />
+//            our services, need assistance, or just want to provide feedback,
+//            <br /> feel free to reach out.</p>
 //         <br />
 //         <div className="contact-info">
 //           <p className='add' style={{fontSize:12}}>Monday-Friday</p>
@@ -62,7 +72,7 @@
 //           <p><FontAwesomeIcon icon={faPhone} /> +355 682 363 499</p>
 //           <br />
 //           <p className='add'style={{fontSize:12}}>Email</p>
-//           <p><FontAwesomeIcon icon={faEnvelope} /> contact@example.com</p>
+//           <p><FontAwesomeIcon icon={faEnvelope} /> nexussoftwarecompany@gmail.com</p>
 //         </div>
 //       </div>
 //       <div className="contact-right">
@@ -123,8 +133,17 @@
 //               required
 //             />
 //           </div>
-//           <button className='send' type="submit">Send Message</button>
+//           {submitting ? (
+//             <p>Sending...</p>
+//           ) : (
+//             <button className='send' type="submit">Send Message</button>
+//           )}
 //         </form>
+//         {submitted && (
+//           <div className="success-message">
+//             <p style={{marginTop:10, marginLeft:10}}>Thank you for your message! We will get back to you shortly.</p>
+//           </div>
+//         )}
 //       </div>
 //     </div>
 //   );
@@ -132,9 +151,9 @@
 
 // export default Contact;
 import { useState } from 'react';
-import '../style/contact.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import '../style/contact.css';
 
 const Contact = () => {
   const [fullName, setFullName] = useState('');
@@ -185,74 +204,73 @@ const Contact = () => {
         setSubmitting(false); // Set submitting state to false
       });
   };
-
   return (
-    <div className="contact-form">
-      <div className="contact-left">
-        <label>CONTACT</label>
-        <p className='left-text' style={{fontSize:30}}>Contact Us. It's Easy.</p>
-        <br />
+    <div className="contact-form md:flex  md:justify-between">
+      <div className="contact-left md:w-1/2 p-4">
+        <label className="contact-con text-xl">CONTACT</label>
+        <p className="left-text"  style={{fontSize:30}}>Contact Us. It's Easy.</p>
         <p>We'd love to hear from you! Whether you have a question about
-          <br />
+           <br />
            our services, need assistance, or just want to provide feedback,
-           <br /> feel free to reach out.</p>
-        <br />
-        <div className="contact-info">
-          <p className='add' style={{fontSize:12}}>Monday-Friday</p>
+          <br /> feel free to reach out.</p>
+        <div className="contact-info mt-4">
+          <p className="add" style={{fontSize:12}}>Monday-Friday</p>
           <p><FontAwesomeIcon icon={faClock} /> 9 AM - 5 PM</p>
-          <br />
-          <p className='add'style={{fontSize:12}}>Phone number</p>
+          <p className="add text-xs md:text-sm"style={{fontSize:12}}>Phone number</p>
           <p><FontAwesomeIcon icon={faPhone} /> +355 682 363 499</p>
-          <br />
-          <p className='add'style={{fontSize:12}}>Email</p>
-          <p><FontAwesomeIcon icon={faEnvelope} /> contact@example.com</p>
+          <p className="add text-xs md:text-sm" style={{fontSize:12}}>Email</p>
+          <p><FontAwesomeIcon icon={faEnvelope} /> nexussoftwarecompany@gmail.com</p>
         </div>
       </div>
-      <div className="contact-right">
+      <div className="contact-right md:w-1/2 p-4">
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <div className="flex-row">
-              <div className="flex-item">
+            <div className="flex flex-wrap mb-4">
+              <div className="w-full md:w-1/2 md:pr-2">
                 <label htmlFor="fullName">Full Name:</label>
                 <input
                   type="text"
                   id="fullName"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
+                  className="w-full p-2 border rounded-md"
                   required
                 />
               </div>
-              <div className="flex-item">
+              <div className="w-full md:w-1/2 md:pl-2">
                 <label htmlFor="email">Email:</label>
                 <input
                   type="email"
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-2 border rounded-md"
                   required
                 />
               </div>
             </div>
           </div>
           <div className="form-group">
-            <div className="flex-row">
-              <div className="flex-item">
+            <div className="flex flex-wrap mb-4">
+              <div className="w-full md:w-1/2 md:pr-2">
                 <label htmlFor="phone">Phone:</label>
                 <input
                   type="tel"
                   id="phone"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  className="w-full p-2 border rounded-md"
                   required
                 />
               </div>
-              <div className="flex-item">
+              <div className="w-full md:w-1/2 md:pl-2">
                 <label htmlFor="company">Company (optional):</label>
                 <input
                   type="text"
                   id="company"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
+                  className="w-full p-2 border rounded-md"
                 />
               </div>
             </div>
@@ -263,18 +281,19 @@ const Contact = () => {
               id="message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
+              className="w-full p-2 border"
               required
             />
           </div>
           {submitting ? (
             <p>Sending...</p>
           ) : (
-            <button className='send' type="submit">Send Message</button>
+            <button className="send  text-white py-2 px-4 " type="submit">Send Message</button>
           )}
         </form>
         {submitted && (
-          <div className="success-message">
-            <p style={{marginTop:10, marginLeft:10}}>Thank you for your message! We will get back to you shortly.</p>
+          <div className="success-message mt-4">
+            <p className="ml-4"style={{marginTop:10, marginLeft:10}}>Thank you for your message! We will get back to you shortly.</p>
           </div>
         )}
       </div>
