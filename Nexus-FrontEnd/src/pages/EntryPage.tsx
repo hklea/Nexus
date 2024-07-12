@@ -4,10 +4,14 @@ import PageFooter from "../components/PageFooter";
 import Portofolio from "../components/Portofolio";
 import OurStory from "../components/OurStory";
 import Contact from "../components/Contact";
+import AboutUs from "../components/AboutUs/AboutUs";
 
 function EntryPage() {
   return (
     <div>
+      <div>
+        <AboutUs/>
+      </div>
       <br />
       <br />
       <br />
@@ -24,8 +28,12 @@ function EntryPage() {
       <div>
         <Portofolio />
       </div>
+]
       <div><Contact/></div>
 
+
+      {/* <div><Contact/></div> */}
+\
       <div>
         <PageFooter />
       </div>
