@@ -1,301 +1,161 @@
-// import { useState } from 'react';
-// import '../style/contact.css';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faClock, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-
-// const Contact = () => {
-//   const [fullName, setFullName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [phone, setPhone] = useState('');
-//   const [company, setCompany] = useState('');
-//   const [message, setMessage] = useState('');
-//   const [submitting, setSubmitting] = useState(false);
-//   const [submitted, setSubmitted] = useState(false);
-
-//   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-
-//     // Prepare form data for submission to Web3Forms
-//     const formData = new FormData();
-//     formData.append('access_key', 'e49f762c-70ee-447f-957f-20d855bcdccf');//e49f762c-70ee-447f-957f-20d855bcdccf
-//     formData.append('fullName', fullName);
-//     formData.append('email', email);
-//     formData.append('phone', phone);
-//     formData.append('company', company);
-//     formData.append('message', message);
-
-//     // Set submitting state to true to show loading indicator
-//     setSubmitting(true);
-
-//     // Submit form data to Web3Forms API endpoint
-//     fetch('https://api.web3forms.com/submit', {
-//       method: 'POST',
-//       body: formData,
-//     })
-//       .then(response => {
-//         if (!response.ok) {
-//           throw new Error('Failed to submit form');
-//         }
-//         // Clear form fields after successful submission
-//         setFullName('');
-//         setEmail('');
-//         setPhone('');
-//         setCompany('');
-//         setMessage('');
-//         setSubmitted(true); // Set submitted state to true
-//         setSubmitting(false); // Set submitting state to false
-//         console.log('Form submitted successfully');
-//       })
-//       .catch(error => {
-//         console.error('Error submitting form:', error);
-//         // Handle error state or display an error message to the user
-//         setSubmitting(false); // Set submitting state to false
-//       });
-//   };
-
-//   return (
-//     <div className="contact-form">
-//       <div className="contact-left">
-//         <label>CONTACT</label>
-//         <p className='left-text' style={{fontSize:30}}>Contact Us. It's Easy.</p>
-//         <br />
-//         <p>We'd love to hear from you! Whether you have a question about
-//           <br />
-//            our services, need assistance, or just want to provide feedback,
-//            <br /> feel free to reach out.</p>
-//         <br />
-//         <div className="contact-info">
-//           <p className='add' style={{fontSize:12}}>Monday-Friday</p>
-//           <p><FontAwesomeIcon icon={faClock} /> 9 AM - 5 PM</p>
-//           <br />
-//           <p className='add'style={{fontSize:12}}>Phone number</p>
-//           <p><FontAwesomeIcon icon={faPhone} /> +355 682 363 499</p>
-//           <br />
-//           <p className='add'style={{fontSize:12}}>Email</p>
-//           <p><FontAwesomeIcon icon={faEnvelope} /> nexussoftwarecompany@gmail.com</p>
-//         </div>
-//       </div>
-//       <div className="contact-right">
-//         <form onSubmit={handleSubmit}>
-//           <div className="form-group">
-//             <div className="flex-row">
-//               <div className="flex-item">
-//                 <label htmlFor="fullName">Full Name:</label>
-//                 <input
-//                   type="text"
-//                   id="fullName"
-//                   value={fullName}
-//                   onChange={(e) => setFullName(e.target.value)}
-//                   required
-//                 />
-//               </div>
-//               <div className="flex-item">
-//                 <label htmlFor="email">Email:</label>
-//                 <input
-//                   type="email"
-//                   id="email"
-//                   value={email}
-//                   onChange={(e) => setEmail(e.target.value)}
-//                   required
-//                 />
-//               </div>
-//             </div>
-//           </div>
-//           <div className="form-group">
-//             <div className="flex-row">
-//               <div className="flex-item">
-//                 <label htmlFor="phone">Phone:</label>
-//                 <input
-//                   type="tel"
-//                   id="phone"
-//                   value={phone}
-//                   onChange={(e) => setPhone(e.target.value)}
-//                   required
-//                 />
-//               </div>
-//               <div className="flex-item">
-//                 <label htmlFor="company">Company (optional):</label>
-//                 <input
-//                   type="text"
-//                   id="company"
-//                   value={company}
-//                   onChange={(e) => setCompany(e.target.value)}
-//                 />
-//               </div>
-//             </div>
-//           </div>
-//           <div className="form-group">
-//             <label htmlFor="message">Message:</label>
-//             <textarea
-//               id="message"
-//               value={message}
-//               onChange={(e) => setMessage(e.target.value)}
-//               required
-//             />
-//           </div>
-//           {submitting ? (
-//             <p>Sending...</p>
-//           ) : (
-//             <button className='send' type="submit">Send Message</button>
-//           )}
-//         </form>
-//         {submitted && (
-//           <div className="success-message">
-//             <p style={{marginTop:10, marginLeft:10}}>Thank you for your message! We will get back to you shortly.</p>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Contact;
-import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import '../style/contact.css';
+import {
+  CallIcon,
+  TimeIcon,
+  LocationIcon,
+} from "../data/EntryPage/ContactInformationData";
+import "../style/contact.css";
 
 const Contact = () => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [company, setCompany] = useState('');
-  const [message, setMessage] = useState('');
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+return (
+    <div className="contact-form  px-[20px] w-full mt-[40px] bg-white  md:justify-between md:px-[40px] mdlg:px-[60px] lg:flex mb-[4rem]">
+      <div className="contact-left md:w-[100%] p-0  ">
+        <div className="w-full  flex justify-left">
+          <label className="contact-con text-xl  tracking-wider">CONTACT</label>
+        </div>
+        <div className="flex justify-left w-full ">
+          <p className="left-text" style={{ fontSize: 30 }}>
+            Contact Us. It's Easy.
+          </p>
+        </div>
+        <div className="w-[95%] mt-[10px]">
+          <p className="flex justify-center text-[#595566]">
+            We'd love to hear from you! Whether you have a question about our
+            services, need assistance, or just want to provide feedback, feel
+            free to reach out.
+          </p>
+        </div>
 
-    // Prepare form data for submission to Web3Forms
-    const formData = new FormData();
-    formData.append('access_key', 'e49f762c-70ee-447f-957f-20d855bcdccf');//e49f762c-70ee-447f-957f-20d855bcdccf
-    formData.append('fullName', fullName);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    formData.append('company', company);
-    formData.append('message', message);
+        <div className="contact-info mt-[30px] ">
+          <div className="flex ">
+            <div className=" pr-0 grid justify-start  items-center ">
+              <TimeIcon width={50} height={50} />
+            </div>
+            <div className=" px-2">
+              <p
+                className=" text-[#595566] text-[11px]"
+                style={{ fontSize: 12 }}
+              >
+                Monday - Friday
+              </p>
+              <p className="mt-1 tracking-wider ">9 AM - 5 PM</p>
+            </div>
+          </div>
 
-    // Set submitting state to true to show loading indicator
-    setSubmitting(true);
+          <div className="flex mt-[12px]">
+            <div className=" pr-0 grid justify-start items-center ">
+              <CallIcon width={50} height={50} />
+            </div>
+            <div className=" px-2">
+              <p
+                className=" text-[#595566] text-[11px]"
+                style={{ fontSize: 12 }}
+              >
+                Phone number
+              </p>
+              <p className="mt-1 tracking-wider ">+355 682 363 499</p>
+            </div>
+          </div>
 
-    // Submit form data to Web3Forms API endpoint
-    fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      body: formData,
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to submit form');
-        }
-        // Clear form fields after successful submission
-        setFullName('');
-        setEmail('');
-        setPhone('');
-        setCompany('');
-        setMessage('');
-        setSubmitted(true); // Set submitted state to true
-        setSubmitting(false); // Set submitting state to false
-        console.log('Form submitted successfully');
-      })
-      .catch(error => {
-        console.error('Error submitting form:', error);
-        // Handle error state or display an error message to the user
-        setSubmitting(false); // Set submitting state to false
-      });
-  };
-  return (
-    <div className="contact-form md:flex  md:justify-between">
-      <div className="contact-left md:w-1/2 p-4">
-        <label className="contact-con text-xl">CONTACT</label>
-        <p className="left-text"  style={{fontSize:30}}>Contact Us. It's Easy.</p>
-        <p>We'd love to hear from you! Whether you have a question about
-           <br />
-           our services, need assistance, or just want to provide feedback,
-          <br /> feel free to reach out.</p>
-        <div className="contact-info mt-4">
-          <p className="add" style={{fontSize:12}}>Monday-Friday</p>
-          <p><FontAwesomeIcon icon={faClock} /> 9 AM - 5 PM</p>
-          <p className="add text-xs md:text-sm"style={{fontSize:12}}>Phone number</p>
-          <p><FontAwesomeIcon icon={faPhone} /> +355 682 363 499</p>
-          <p className="add text-xs md:text-sm" style={{fontSize:12}}>Email</p>
-          <p><FontAwesomeIcon icon={faEnvelope} /> nexussoftwarecompany@gmail.com</p>
+          <div className="flex mt-[12px]">
+            <div className=" pr-0 grid justify-start items-center ">
+              <LocationIcon width={50} height={50} />
+            </div>
+            <div className=" px-2">
+              <p
+                className=" text-[#595566] text-[11px]"
+                style={{ fontSize: 12 }}
+              >
+                Email
+              </p>
+              <p className="mt-1 " style={{ fontSize: 16 }}>
+                nexussoftwarecompany@gmail.com
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="contact-right md:w-1/2 p-4">
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <div className="flex flex-wrap mb-4">
-              <div className="w-full md:w-1/2 md:pr-2">
-                <label htmlFor="fullName">Full Name:</label>
+
+      <div className="mt-[3rem]  lg:ml-[50px] ">
+        <div>
+          <div className="-mx-4 flex flex-wrap">
+            <div className="w-full  px-4 md:w-1/2">
+              <div className="mb-8">
+                <label
+                  htmlFor="name"
+                  className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                >
+                  Full Name
+                </label>
                 <input
-                  type="text"
-                  id="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="w-full p-2 border rounded-md"
-                  required
-                />
-              </div>
-              <div className="w-full md:w-1/2 md:pl-2">
-                <label htmlFor="email">Email:</label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full p-2 border rounded-md"
-                  required
+                  placeholder="Name Surname"
+                  className="dark:rounded-none border-stroke w-full rounded-none border bg-[white] px-6 py-3 text-base text-body-color outline-none focus:border-gray-400 focus:rounded-none focus:text-black focus:font-medium  dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                 />
               </div>
             </div>
-          </div>
-          <div className="form-group">
-            <div className="flex flex-wrap mb-4">
-              <div className="w-full md:w-1/2 md:pr-2">
-                <label htmlFor="phone">Phone:</label>
+            <div className="w-full  px-4 md:w-1/2">
+              <div className="mb-8">
+                <label
+                  htmlFor="name"
+                  className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                >
+                  Email
+                </label>
                 <input
-                  type="tel"
-                  id="phone"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full p-2 border rounded-md"
-                  required
-                />
-              </div>
-              <div className="w-full md:w-1/2 md:pl-2">
-                <label htmlFor="company">Company (optional):</label>
-                <input
-                  type="text"
-                  id="company"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  className="w-full p-2 border rounded-md"
+                  placeholder="example@gmail.com"
+                  className="border-stroke w-full rounded-[0px] border bg-[white] px-6 py-3 text-base text-body-color outline-none focus:border-gray-400 focus:rounded-none dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                 />
               </div>
             </div>
+            <div className="w-full  px-4 md:w-1/2">
+              <div className="mb-8">
+                <label
+                  htmlFor="name"
+                  className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                >
+                  Phone
+                </label>
+                <input
+                  placeholder="+008 654 231"
+                  className="border-stroke w-full rounded-[0px] border bg-[white] px-6 py-3 text-base text-body-color outline-none focus:border-gray-400 focus:rounded-none dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                />
+              </div>
+            </div>
+            <div className="w-full  px-4 md:w-1/2">
+              <div className="mb-8">
+                <label
+                  htmlFor="name"
+                  className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                >
+                  Company(optional)
+                </label>
+                <input
+                  placeholder="yourcompany.com"
+                  className="border-stroke w-full rounded-[0px] border bg-[#ffffff] px-6 py-3 text-base text-body-color outline-none focus:border-gray-400 focus:rounded-none dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                />
+              </div>
+            </div>
+            <div className="w-full  px-4  md:w-full">
+              <div className="mb-8">
+                <label
+                  htmlFor="name"
+                  className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                >
+                  Message
+                </label>
+                <textarea
+            
+                  placeholder="Briefly tell us about your project and your current goals. How can we help you?"
+                  className="border-stroke w-full rounded-[0px] border bg-[#ffffff] px-6 py-3 text-base text-body-color outline-none focus:border-gray-400 focus:rounded-none dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
+                />
+              </div>
+            </div>
+
+            <div className="px-4 w-full flex  ">
+            <button className="text-nowrap text-white border-white border-solid py-3 px-8 w-[100%] xs:w-[60%] sm:w-[50%] tracking-wider text-[14px]  hover:border hover:border-gray-800 active:bg-">Send Message</button>
+            </div>
           </div>
-          <div className="form-group">
-            <label htmlFor="message">Message:</label>
-            <textarea
-              id="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="w-full p-2 border"
-              required
-            />
-          </div>
-          {submitting ? (
-            <p>Sending...</p>
-          ) : (
-            <button className="send  text-white py-2 px-4 " type="submit">Send Message</button>
-          )}
-        </form>
-        {submitted && (
-          <div className="success-message mt-4">
-            <p className="ml-4"style={{marginTop:10, marginLeft:10}}>Thank you for your message! We will get back to you shortly.</p>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );
