@@ -5,10 +5,17 @@ import Portofolio from "../components/Portofolio";
 import OurStory from "../components/OurStory";
 import Contact from "../components/Contact";
 import AboutUs from "../components/AboutUs/AboutUs";
+import Header from "../components/Header";
 
 function EntryPage() {
   return (
-    <div>
+    <div className="bg-white">
+      <div>
+        <Header/>
+      </div>
+      <div className="h-[500px] bg-[#9BB5C8]">
+
+      </div>
       <div>
         <AboutUs/>
       </div>
@@ -28,12 +35,12 @@ function EntryPage() {
       <div>
         <Portofolio />
       </div>
-]
-      <div><Contact/></div>
+
+      <div className="bg-white"><Contact/></div>
 
 
       {/* <div><Contact/></div> */}
-\
+
       <div>
         <PageFooter />
       </div>

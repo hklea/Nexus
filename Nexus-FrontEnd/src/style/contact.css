@@ -1,23 +1,20 @@
-.contact-form{
+.contact-form {
   width: 100%;
-  background: #eaeaea; 
-  padding-top: 30px;
-  /* padding-bottom: 20px; */
+  background-color: "#F1F1F1";
 
-  
+  /* padding-bottom: 20px; */
 }
 /* .contact-left{
   padding-left: 130px;
 } */
 
-.contact-info{
+.contact-info {
   margin-bottom: 10px;
 }
-.left-text{
+.left-text {
   font-weight: bold;
-  color:#000;
+  color: #000;
   margin-top: 0px;
-
 }
 .contact-left label {
   font-size: 1.2rem;
@@ -26,16 +23,15 @@
   color: #ccc;
   padding: 0px 23px; /* Padding for rounded edges */
   border-radius: 20px; /* Rounded edges */
-  background-color: #9BB5C8; /* Example background color */
+  background-color: #9bb5c8; /* Example background color */
   display: inline-block; /* Make it inline block to contain padding */
   font-size: 15px;
-  color:#f0f0f0;
+  color: #f0f0f0;
 }
 
 .contact-left p {
   font-size: 1rem;
   line-height: 1.4;
-  
 }
 .contact-right {
   /* tani kete poshte  e bera koment thjesht per et par ene 
@@ -86,8 +82,6 @@ textarea {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
-  
 button {
   padding: 10px 2px;
   font-size: 1rem;
@@ -96,27 +90,27 @@ button {
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+
 }
 
 button:hover {
-  background-color:#ccc;
+  background-color: #ccc;
   color: #000;
 }
 
-.add{
+button:active {
+  color: #ccc;
+  background-color: #000 !important;
+}
+
+
+.add {
   font-weight: lighter;
-margin-left: 20px;
-  font-size:12px;
+  margin-left: 20px;
+  font-size: 12px;
   margin-top: 20px;
 }
 
-
-
-.contact-con{
+.contact-con {
   padding-left: 0px; /* Add padding to create space */
-  margin-top: 70px;
 }
-
-
-
