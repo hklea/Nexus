@@ -47,7 +47,7 @@ function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 w-full flex justify-between items-center px-1 md:px-12 transition-all duration-1000 ${
+        className={` flex fixed lg:static  z-50 w-full  justify-between items-center px-1 md:px-12 transition-all duration-1000 ${
           scrolledFromTop
             ? "h-16 bg-[#9BB5C8] drop-shadow-3xl"
             : "bg-[#9BB5C8] h-20"
@@ -63,67 +63,68 @@ function Header() {
           />
         </a>
 
-
-
-        <nav className=" bg-[#181818] hidden lg:block mr-[20px] text-[#dddada] rounded-[50px] text-nowrap">
-          <ul className="flex justify-between align-middle  px-6 font-thin py-[5px] text-[13px] ">
-            <li
-              className={`mr-16 ${
-                isSelected === 0 ? "underline" : ""
-              }  cursor-pointer hover:underline mt-[3px]`}
-              onClick={() => {
-                setIsSelected(0);
-              }}
-            >
-              HOME
-            </li>
-            <li
-              className={`mr-16 ${
-                isSelected === 1 ? "underline" : ""
-              } cursor-pointer hover:underline mt-[3px]`}
-              onClick={() => {
-                setIsSelected(1);
-              }}
-            >
-              ABOUT
-            </li>
-            <li
-              className={`mr-16 ${
-                isSelected === 2 ? "underline" : ""
-              } cursor-pointer hover:underline mt-[3px]`}
-              onClick={() => {
-                setIsSelected(2);
-              }}
-            >
-              SERVICE
-            </li>
-            <li
-              className={`mr-16 ${
-                isSelected === 3 ? "underline" : ""
-              } cursor-pointer hover:underline mt-[3px]`}
-              onClick={() => {
-                setIsSelected(3);
-              }}
-            >
-              PORTOFOLIO
-            </li>
-            <ul className="flex cursor-pointer">
+        <div className="bg-red-600 flex justify-center align-top h-[30px] z-50 ">
+          {" "} 
+          <nav className=" bg-[#181818] hidden lg:flex lg:fixed lg:text-center lg:justify-center mr-[20px] text-[#dddada] rounded-[50px] text-nowrap">
+            <ul className="flex justify-between align-middle  px-6 font-thin py-[5px] text-[13px] ">
               <li
-                className={`cursor-pointer ${
-                  isSelected === 4 ? "underline" : ""
-                } hover:underline mt-[3px] mr-[10px]`}
+                className={`mr-16 ${
+                  isSelected === 0 ? "underline" : ""
+                }  cursor-pointer hover:underline mt-[3px]`}
                 onClick={() => {
-                  setIsSelected(4);
+                  setIsSelected(0);
                 }}
               >
-                CONTACT US
+                HOME
               </li>
-              <div className="h-[25px] rounded-[50px]  w-[25px] mr-[-15px] bg-white grid items-center justify-center drop-shadow-2xl">
-                {messageIcon}
-              </div>
+              <li
+                className={`mr-16 ${
+                  isSelected === 1 ? "underline" : ""
+                } cursor-pointer hover:underline mt-[3px]`}
+                onClick={() => {
+                  setIsSelected(1);
+                }}
+              >
+                ABOUT
+              </li>
+              <li
+                className={`mr-16 ${
+                  isSelected === 2 ? "underline" : ""
+                } cursor-pointer hover:underline mt-[3px]`}
+                onClick={() => {
+                  setIsSelected(2);
+                }}
+              >
+                SERVICE
+              </li>
+              <li
+                className={`mr-16 ${
+                  isSelected === 3 ? "underline" : ""
+                } cursor-pointer hover:underline mt-[3px]`}
+                onClick={() => {
+                  setIsSelected(3);
+                }}
+              >
+                PORTOFOLIO
+              </li>
+              <ul className="flex cursor-pointer">
+                <li
+                  className={`cursor-pointer ${
+                    isSelected === 4 ? "underline" : ""
+                  } hover:underline mt-[3px] mr-[10px]`}
+                  onClick={() => {
+                    setIsSelected(4);
+                  }}
+                >
+                  CONTACT US
+                </li>
+                <div className="h-[25px] rounded-[50px]  w-[25px] mr-[-15px] bg-white grid items-center justify-center drop-shadow-2xl">
+                  {messageIcon}
+                </div>
+              </ul>
             </ul>
-          </ul>
-        </nav>
+          </nav>
+        </div>
 
         <div
           className={`${
