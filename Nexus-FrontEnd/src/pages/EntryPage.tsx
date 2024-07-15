@@ -6,18 +6,20 @@ import OurStory from "../components/OurStory";
 import Contact from "../components/Contact";
 import AboutUs from "../components/AboutUs/AboutUs";
 import Header from "../components/Header";
+import Entry from "../components/Entry";
 
 function EntryPage() {
   return (
     <div className="bg-white">
       <div>
-        <Header/>
+        <Header />
       </div>
-      <div className="h-[500px] bg-[#9BB5C8]">
-
+      
+      <div className="">
+        <Entry />
       </div>
       <div>
-        <AboutUs/>
+        <AboutUs />
       </div>
       <br />
       <br />
@@ -30,14 +32,13 @@ function EntryPage() {
       </div>
 
       <div className="h-[500px] flex items-center justify-center text-center">
-        <ProjectIdea />
+        {/* <ProjectIdea /> */}
       </div>
       <div>
         <Portofolio />
       </div>
 
-      <div className="bg-white"><Contact/></div>
-
+      <div className="bg-white">{/* <Contact /> */}</div>
 
       {/* <div><Contact/></div> */}
 
