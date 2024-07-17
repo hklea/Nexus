@@ -54,6 +54,7 @@ function Header() {
         }`}
       >
         <a href="#" className="w-[30%] lg:w-[10%] ml-[10px]">
+          {/*The nexus Logo will be here */}
           <img
             src="https://res.cloudinary.com/thirus/image/upload/v1631988912/logos/chitchat-logo_pkpwwu.png"
             alt="ChitChat Logo"

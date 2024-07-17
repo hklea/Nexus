@@ -14,7 +14,7 @@ const Services = () => {
               Services
             </div>
           </div>
-          <div className=" mt-[5px] text-[#181818] font-semibold text-[27px] md:text-[30px] lg:text-[37px] flex justify-center text-center">
+          <div className=" mt-[5px] text-[#181818] px-3 font-semibold text-[27px] md:text-[30px] lg:text-[37px] flex justify-center text-center">
             <div>Get Control Over Your Business </div>
           </div>
 

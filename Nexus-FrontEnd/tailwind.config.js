@@ -69,6 +69,8 @@ export default {
       },
       fontFamily: {
         lato: ["Lato", "sans-serif"],
+        michroma: ['Michroma', 'sans-serif'],
+        'kumbh-sans': ['"Kumbh Sans"', 'sans-serif'],
       },
     },
   },

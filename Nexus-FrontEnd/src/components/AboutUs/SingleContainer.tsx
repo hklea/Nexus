@@ -4,9 +4,9 @@ const SingleContainer = ({ feature }: { feature: AboutUsType }) => {
   const { icon, title, paragraph } = feature;
 
   return (
-    <div className="w-full p-[20px] pl-[29px] rounded-[20px] cursor-pointer bg-[#EBEBEB] ">
+    <div className="w-full p-[20px] pl-[29px] rounded-[20px] cursor-pointer bg-white ">
       <div className={`relative `}>
-        <div className="mb-[5px] mt-[10px] flex h-[70px] w-[70px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
+        <div className="bg-transparent mb-[5px] mt-[10px] flex h-[70px] w-[70px] items-center justify-center rounded-md  bg-opacity-10 text-primary">
           {icon}
         </div>
         <h3
