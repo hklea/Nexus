@@ -20,7 +20,7 @@ const SingleService = ({ feature }: { feature: ServiceType }) => {
       onMouseLeave={handleMouseLeave}
     >
       <div className={`relative ${isHovered ? "text-white" : ""}`}>
-        <div className="mb-[5px] mt-[10px] flex h-[70px] w-[70px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
+        <div className="mb-[5px] mt-[10px] flex h-[70px] w-[70px] items-center justify-center rounded-md bg-transparent bg-opacity-10 text-primary">
           {isHovered ? icon2 : icon}
         </div>
         <h3
