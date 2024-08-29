@@ -1,31 +1,56 @@
 import { useState, useEffect } from "react";
 import More from "./Common/More";
+import { Link } from "react-scroll";
 import {
   InstaIcon,
   messageIcon,
   TikTikIcon,
 } from "../data/EntryPage/HeaderData";
+import {
+  openInstagramPage,
+  openTikTokPage,
+} from "../utilities/EntryPage/CallingSocial";
+import logo from "../assets/Icons/logo.png";
 
 function Header() {
   const [scrolledFromTop, setScrolledFromTop] = useState(false);
   const [isSelected, setIsSelected] = useState(0);
   const [moreSize, setMoreSize] = useState("medium");
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
+    const handleResize = () => {
+      const currentWidth = window.innerWidth;
+      setWindowWidth(currentWidth);
+    };
+
     const handleScroll = () => {
-      if (window.pageYOffset >= 300) {
+      if (window.scrollY >= 300) {
         setScrolledFromTop(true);
       } else {
         setScrolledFromTop(false);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('resize', handleResize);
+
+    if (windowWidth < 992) {
+      window.addEventListener('scroll', handleScroll);
+    } else {
+      window.removeEventListener('scroll', handleScroll);
+    }
+
+    // Initial check
+    if (windowWidth < 992) {
+      handleScroll(); // Check scroll position initially if width < 992
+    }
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [windowWidth]);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,6 +67,40 @@ function Header() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+  }, [window.innerWidth]);
+
+  useEffect(() => {
+    const sections = ["home", "about", "services", "portfolio", "contact"];
+    const sectionElements = sections.map((id) => document.getElementById(id));
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.5,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = sections.indexOf(entry.target.id);
+          setIsSelected(index);
+        }
+      });
+    }, observerOptions);
+
+    sectionElements.forEach((element) => {
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      sectionElements.forEach((element) => {
+        if (element) {
+          observer.unobserve(element);
+        }
+      });
+    };
   }, []);
 
   return (
@@ -54,70 +113,95 @@ function Header() {
         }`}
       >
         <a href="#" className="w-[30%] lg:w-[10%] ml-[10px]">
-          {/*The nexus Logo will be here */}
+          {/*The ChiefSoft Logo will be here */}
           <img
-            src="https://res.cloudinary.com/thirus/image/upload/v1631988912/logos/chitchat-logo_pkpwwu.png"
+            src={logo}
             alt="ChitChat Logo"
-            className={`h-8 transform origin-left transition duration-200 ${
+            className={`h-32 lg:h-36 whitespace-nowrap lg:min-w-32 lg:mt-2 transform origin-left transition duration-200 ${
               scrolledFromTop ? "scale-75" : "scale-100"
             }`}
           />
         </a>
 
         <div className="bg-red-600 flex justify-center align-top h-[30px] z-50 ">
-          {" "} 
+          {" "}
           <nav className=" bg-[#181818] hidden lg:flex lg:fixed lg:text-center lg:justify-center mr-[20px] text-[#dddada] rounded-[50px] text-nowrap">
             <ul className="flex justify-between align-middle  px-6 font-thin py-[5px] text-[13px] ">
               <li
                 className={`mr-16 ${
                   isSelected === 0 ? "underline" : ""
                 }  cursor-pointer hover:underline mt-[3px]`}
-                onClick={() => {
-                  setIsSelected(0);
-                }}
               >
-                HOME
+                <Link
+                  to="home"
+                  spy={true}
+                  smooth={true}
+                  duration={300}
+                  onClick={() => setIsSelected(0)}
+                >
+                  HOME
+                </Link>
               </li>
               <li
                 className={`mr-16 ${
                   isSelected === 1 ? "underline" : ""
                 } cursor-pointer hover:underline mt-[3px]`}
-                onClick={() => {
-                  setIsSelected(1);
-                }}
               >
-                ABOUT
+                <Link
+                  to="about"
+                  spy={true}
+                  smooth={true}
+                  duration={300}
+                  onClick={() => setIsSelected(1)}
+                >
+                  ABOUT
+                </Link>
               </li>
               <li
                 className={`mr-16 ${
                   isSelected === 2 ? "underline" : ""
                 } cursor-pointer hover:underline mt-[3px]`}
-                onClick={() => {
-                  setIsSelected(2);
-                }}
               >
-                SERVICE
+                <Link
+                  to="services"
+                  spy={true}
+                  smooth={true}
+                  duration={300}
+                  onClick={() => setIsSelected(2)}
+                >
+                  SERVICES
+                </Link>
               </li>
               <li
                 className={`mr-16 ${
                   isSelected === 3 ? "underline" : ""
                 } cursor-pointer hover:underline mt-[3px]`}
-                onClick={() => {
-                  setIsSelected(3);
-                }}
               >
-                PORTOFOLIO
+                <Link
+                  to="portfolio"
+                  spy={true}
+                  smooth={true}
+                  duration={300}
+                  onClick={() => setIsSelected(3)}
+                >
+                  PORTFOLIO
+                </Link>
               </li>
               <ul className="flex cursor-pointer">
                 <li
                   className={`cursor-pointer ${
                     isSelected === 4 ? "underline" : ""
                   } hover:underline mt-[3px] mr-[10px]`}
-                  onClick={() => {
-                    setIsSelected(4);
-                  }}
                 >
-                  CONTACT US
+                  <Link
+                    to="contact"
+                    spy={true}
+                    smooth={true}
+                    duration={300}
+                    onClick={() => setIsSelected(4)}
+                  >
+                    CONTACT
+                  </Link>
                 </li>
                 <div className="h-[25px] rounded-[50px]  w-[25px] mr-[-15px] bg-white grid items-center justify-center drop-shadow-2xl">
                   {messageIcon}
@@ -135,6 +219,9 @@ function Header() {
           <div className="flex  w-[0%]  justify-between">
             <div className=" drop-shadow-2xl">
               <div
+                onClick={() => {
+                  openInstagramPage();
+                }}
                 className={`${
                   moreSize == "large"
                     ? "h-[30px] w-[30px] "
@@ -151,6 +238,9 @@ function Header() {
             <div>
               {" "}
               <div
+                onClick={() => {
+                  openTikTokPage();
+                }}
                 className={`${
                   moreSize == "large"
                     ? "h-[30px] w-[30px] "

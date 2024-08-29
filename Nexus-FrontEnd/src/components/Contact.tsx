@@ -7,8 +7,15 @@ import "../style/contact.css";
 import { useState } from "react";
 import { makeContact } from "../api/ContactApi";
 import { Contacts } from "../types/Contact";
+import NoCloseAlert from "./Common/Alerts/NoCloseAlert";
+import { useEffect } from "react";
+import { checkAtributes } from "../utilities/Authentication/EntryPage/Contact";
+import { User } from "../types/User";
+import { useNavigate } from "react-router-dom";
 
 const Contact = () => {
+  const [isMessSent, setmessageSent] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState<Contacts>({
     fullName: "",
     email: "",
@@ -16,25 +23,64 @@ const Contact = () => {
     company: "",
     message: "",
   });
+  const navigate = useNavigate();
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    try {
-      const response = await makeContact(formData);
-      console.log("Message sent successfully:", response);
-    } catch (error) {
-      console.error("Error sending message:", error);
-   
+    const userString = sessionStorage.getItem("user");
+    const user: User = userString ? JSON.parse(userString) : null;
+    if (!user) {
+      navigate("/signin");
+    } else {
+      const check = checkAtributes(formData);
+      if (check.status == 0) {
+        setErrorMessage(check.message);
+      } else {
+        try {
+          setErrorMessage("");
+          const response = await makeContact(formData);
+          if (response == 1) {
+            setmessageSent(true);
+            setFormData({
+              fullName: "",
+              email: "",
+              phone: "",
+              company: "",
+              message: "",
+            });
+          }
+        } catch (error) {
+          console.error("Error sending message:", error);
+        }
+      }
     }
   };
 
+  useEffect(() => {
+    if (isMessSent) {
+      const timer = setTimeout(() => {
+        setmessageSent(false);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isMessSent]);
   return (
     <div className="contact-form px-[20px] w-full mt-[40px] bg-white md:justify-between md:px-[40px] mdlg:px-[60px] lg:flex mb-[4rem]">
+      {isMessSent && (
+        <div className="">
+          <NoCloseAlert
+            title="Message sent successfuly"
+            text="We will contact you as soon as possible"
+            color="green"
+          />
+        </div>
+      )}
       <div className="contact-left md:w-[100%] p-0">
         <div className="w-full flex justify-left">
           <label className="contact-con text-xl tracking-wider">CONTACT</label>
@@ -58,7 +104,10 @@ const Contact = () => {
               <TimeIcon width={50} height={50} />
             </div>
             <div className="px-2">
-              <p className="text-[#595566] text-[11px]" style={{ fontSize: 12 }}>
+              <p
+                className="text-[#595566] text-[11px]"
+                style={{ fontSize: 12 }}
+              >
                 Monday - Friday
               </p>
               <p className="mt-1 tracking-wider">9 AM - 5 PM</p>
@@ -70,7 +119,10 @@ const Contact = () => {
               <CallIcon width={50} height={50} />
             </div>
             <div className="px-2">
-              <p className="text-[#595566] text-[11px]" style={{ fontSize: 12 }}>
+              <p
+                className="text-[#595566] text-[11px]"
+                style={{ fontSize: 12 }}
+              >
                 Phone number
               </p>
               <p className="mt-1 tracking-wider">+355 682 363 499</p>
@@ -82,11 +134,14 @@ const Contact = () => {
               <LocationIcon width={50} height={50} />
             </div>
             <div className="px-2">
-              <p className="text-[#595566] text-[11px]" style={{ fontSize: 12 }}>
+              <p
+                className="text-[#595566] text-[11px]"
+                style={{ fontSize: 12 }}
+              >
                 Email
               </p>
               <p className="mt-1" style={{ fontSize: 14 }}>
-                nexussoftwarecompany@gmail.com
+                chiefsoft@gmail.com
               </p>
             </div>
           </div>
@@ -102,7 +157,7 @@ const Contact = () => {
                   htmlFor="fullName"
                   className="mb-3 block text-sm font-medium text-dark dark:text-white"
                 >
-                  Full Name
+                  Full Name*
                 </label>
                 <input
                   name="fullName"
@@ -119,7 +174,7 @@ const Contact = () => {
                   htmlFor="email"
                   className="mb-3 block text-sm font-medium text-dark dark:text-white"
                 >
-                  Email
+                  Email*
                 </label>
                 <input
                   name="email"
@@ -136,7 +191,7 @@ const Contact = () => {
                   htmlFor="phone"
                   className="mb-3 block text-sm font-medium text-dark dark:text-white"
                 >
-                  Phone
+                  Phone*
                 </label>
                 <input
                   name="phone"
@@ -170,7 +225,7 @@ const Contact = () => {
                   htmlFor="message"
                   className="mb-3 block text-sm font-medium text-dark dark:text-white"
                 >
-                  Message
+                  Message*
                 </label>
                 <textarea
                   name="message"
@@ -180,7 +235,13 @@ const Contact = () => {
                   className="border-stroke w-full rounded-xl border bg-[#ffffff] px-6 py-3 text-base text-body-color outline-none focus:border-gray-400 focus:rounded-xl dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                 />
               </div>
+              <div>
+                <div className="ml-5 mt-[-1rem] mb-2 text-red-600">
+                  {errorMessage}
+                </div>
+              </div>
             </div>
+
             <div className="px-4 w-full flex">
               <button
                 type="submit"

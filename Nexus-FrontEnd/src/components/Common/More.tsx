@@ -6,25 +6,33 @@ import IconButton from "@mui/material/IconButton";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import Tooltip from "@mui/material/Tooltip";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
-import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
-import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
-import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
+import DevicesOutlinedIcon from "@mui/icons-material/DevicesOutlined";
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
+import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import { Link } from "react-scroll";
 
 function More({ size }: { size: any }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [activeLink, setActiveLink] = React.useState<string>("home"); // Track active link
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleSetActive = (link: string) => {
+    setActiveLink(link);
+  };
+
   return (
     <div>
       <React.Fragment>
         <Box
-        
           sx={{
             display: "flex",
             alignItems: "center",
@@ -43,7 +51,7 @@ function More({ size }: { size: any }) {
             >
               <ReorderIcon
                 fontSize={size}
-                className=" w-[40px] text-white  h-24 "
+                className="w-[40px] text-white h-24"
               />
             </IconButton>
           </Tooltip>
@@ -54,77 +62,180 @@ function More({ size }: { size: any }) {
           open={open}
           onClose={handleClose}
           onClick={handleClose}
-          style={{ padding: "0px"}}
+          style={{ padding: "0px" }}
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           className=""
         >
-       
-
           <MenuItem
             style={{ paddingBottom: "0px", paddingTop: "0px" }}
             onClick={handleClose}
           >
-            <div className="flex  w-[100%] justify-left">
-              <HomeOutlinedIcon className="text-[#585858] " />
-              <p className="text-[12.3px] grid items-center text-start  text-[#585858] font-lato ml-[10px]">
-                HOME
-              </p>
-            </div>
-          </MenuItem>
-
-
-          <MenuItem
-            style={{ paddingBottom: "0px", paddingTop: "0px" }}
-            onClick={handleClose}
-          >
-            <div className="flex  w-[100%] justify-left">
-            
-              <GroupsOutlinedIcon className="text-[#585858] " />
-              <p className="text-[12.3px] grid items-center text-start  text-[#585858] font-lato ml-[10px]">
-                ABOUT
-              </p>
-            </div>
-          </MenuItem>
-
-          <MenuItem
-            style={{ paddingBottom: "0px", paddingTop: "0px" }}
-            onClick={handleClose}
-          >
-            <div className="flex  w-[100%] justify-left">
-              <DevicesOutlinedIcon className="text-[#585858] " />
-              <p className="text-[12.3px] grid items-center text-start  text-[#585858] font-lato ml-[10px]">
-                SERVICE
-              </p>
-            </div>
+            <Link
+              to="home"
+              spy={true}
+              smooth={true}
+              duration={300}
+              onClick={() => {
+                handleClose();
+                handleSetActive("home");
+              }}
+              onSetActive={() => handleSetActive("home")}
+            >
+              <div className="flex w-[100%] justify-left sm:py-1">
+                <HomeOutlinedIcon
+                  className={
+                    activeLink === "home" ? "text-black" : "text-[#585858]"
+                  }
+                />
+                <p
+                  className={`text-[12.3px] grid items-center text-start font-lato ml-[10px] ${
+                    activeLink === "home"
+                      ? "text-black font-extrabold"
+                      : "text-[#585858]"
+                  }`}
+                >
+                  HOME
+                </p>
+              </div>
+            </Link>
           </MenuItem>
 
           <MenuItem
             style={{ paddingBottom: "0px", paddingTop: "0px" }}
             onClick={handleClose}
           >
-            <div className="flex  w-[100%] justify-around">
-              <PublicOutlinedIcon className="text-[#585858] " />
-              <p className="text-[12.3px] grid items-center text-start  text-[#585858] font-lato ml-[10px]">
-                PORTOFOLIO
-              </p>
-            </div>
+            <Link
+              to="about"
+              spy={true}
+              smooth={true}
+              duration={300}
+              onClick={() => {
+                handleClose();
+                handleSetActive("about");
+              }}
+              onSetActive={() => handleSetActive("about")}
+            >
+              <div className="flex w-[100%] justify-left sm:py-2">
+                <GroupsOutlinedIcon
+                  className={
+                    activeLink === "about" ? "text-black" : "text-[#585858]"
+                  }
+                />
+                <p
+                  className={`text-[12.3px] grid items-center text-start font-lato ml-[10px] ${
+                    activeLink === "about"
+                      ? "text-black font-extrabold"
+                      : "text-[#585858]"
+                  }`}
+                >
+                  ABOUT
+                </p>
+              </div>
+            </Link>
           </MenuItem>
 
           <MenuItem
             style={{ paddingBottom: "0px", paddingTop: "0px" }}
             onClick={handleClose}
           >
-            <div className="flex  w-[100%] justify-around">
-              <PhoneOutlinedIcon className="text-[#585858] " />
-              <p className="text-[12.3px] grid items-center text-start  text-[#585858] font-lato ml-[10px]">
-                CONTACT US
-              </p>
-            </div>
+            <Link
+              to="services"
+              spy={true}
+              smooth={true}
+              duration={300}
+              onClick={() => {
+                handleClose();
+                handleSetActive("services");
+              }}
+              onSetActive={() => handleSetActive("services")}
+            >
+              <div className="flex w-[100%] justify-left sm:py-2">
+                <DevicesOutlinedIcon
+                  className={
+                    activeLink === "services" ? "text-black" : "text-[#585858]"
+                  }
+                />
+                <p
+                  className={`text-[12.3px] grid items-center text-start font-lato ml-[10px] ${
+                    activeLink === "services"
+                      ? "text-black font-extrabold"
+                      : "text-[#585858]"
+                  }`}
+                >
+                  SERVICES
+                </p>
+              </div>
+            </Link>
           </MenuItem>
 
-         
+          <MenuItem
+            style={{ paddingBottom: "0px", paddingTop: "0px" }}
+            onClick={handleClose}
+          >
+            <Link
+              to="portfolio"
+              spy={true}
+              smooth={true}
+              duration={300}
+              onClick={() => {
+                handleClose();
+                handleSetActive("portfolio");
+              }}
+              onSetActive={() => handleSetActive("portfolio")}
+            >
+              <div className="flex w-[100%] justify-around sm:py-2">
+                <PublicOutlinedIcon
+                  className={
+                    activeLink === "portfolio" ? "text-black" : "text-[#585858]"
+                  }
+                />
+                <p
+                  className={`text-[12.3px] grid items-center text-start font-lato ml-[10px] ${
+                    activeLink === "portfolio"
+                      ? "text-black font-extrabold"
+                      : "text-[#585858]"
+                  }`}
+                >
+                  PORTFOLIO
+                </p>
+              </div>
+            </Link>
+          </MenuItem>
 
+          <MenuItem
+            style={{ paddingBottom: "0px", paddingTop: "0px" }}
+            onClick={handleClose}
+          >
+            <Link
+              to="contact"
+              spy={true}
+              smooth={true}
+              duration={300}
+              onClick={() => {
+                handleClose();
+                handleSetActive("contact");
+              }}
+              onSetActive={() => handleSetActive("contact")}
+            >
+              <div className="flex w-[100%] justify-around sm:py-2">
+                <PhoneOutlinedIcon
+                  className={
+                    activeLink === "contact" ? "text-black" : "text-[#585858]"
+                  }
+                />
+                <p
+                  className={`text-[12.3px] grid items-center text-start font-lato ml-[10px] ${
+                    activeLink === "contact"
+                      ? "text-black font-extrabold"
+                      : "text-[#585858]"
+                  }`}
+                >
+                  CONTACT
+                </p>
+              </div>
+            </Link>
+          </MenuItem>
         </Menu>
       </React.Fragment>
     </div>

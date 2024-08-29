@@ -41,7 +41,7 @@ const ContainerData: AboutUsType[] = [
       "Delivering cutting-edge technology to stay ahead in a competitive market.",
   },
   {
-    id: 1,
+    id: 2,
     icon: (
       <svg
         width="54"
@@ -71,7 +71,7 @@ const ContainerData: AboutUsType[] = [
     paragraph: "Optimizing workflows to enhance productivity and reduce costs.",
   },
   {
-    id: 1,
+    id: 3,
     icon: (
       <svg
         width="53"
@@ -101,7 +101,7 @@ const ContainerData: AboutUsType[] = [
     paragraph: " Ensuring consistent and dependable results for your business.",
   },
   {
-    id: 1,
+    id: 4,
 
     icon: (
       <svg
