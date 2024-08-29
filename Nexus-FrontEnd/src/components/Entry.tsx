@@ -1,4 +1,4 @@
-import image from "../assets/Images/EntryPage/ManInChair.webp";
+import image from "../assets/Images/EntryPage/ManInChair.png";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNavigate } from "react-router-dom";
