@@ -76,7 +76,7 @@ const ServicesData: ServiceType[] = [
       "Our team of expert developers utilizes the latest technologies to build websites that not only look stunning but also provide an exceptional user experience.",
   },
   {
-    id: 1,
+    id: 2,
     icon2: (
       <svg
         width="82"
@@ -144,7 +144,7 @@ const ServicesData: ServiceType[] = [
       "From inventory management to customer relationship management, we create systems that integrate seamlessly with your existing processes.",
   },
   {
-    id: 1,
+    id: 3,
     icon2: (
       <svg
         width="96"
@@ -220,7 +220,7 @@ const ServicesData: ServiceType[] = [
       "Whether you need a customer-facing app or an enterprise-level solution, we deliver mobile apps that meet your business needs and exceed your expectations.",
   },
   {
-    id: 1,
+    id: 4,
     icon2: (
       <svg
         width="92"
@@ -267,10 +267,10 @@ const ServicesData: ServiceType[] = [
     ),
     title: "Ongoing Maintenance",
     paragraph:
-      "At Nexus, we provide regular updates, performance monitoring, and prompt troubleshooting to keep your systems running at their best. ",
+      "At ChiefSoft, we provide regular updates, performance monitoring, and prompt troubleshooting to keep your systems running at their best. ",
   },
   {
-    id: 1,
+    id: 5,
     icon2: (
       <svg
         width="110"
@@ -344,7 +344,7 @@ const ServicesData: ServiceType[] = [
       "Our QA team employs a variety of testing methodologies, including functional, performance, and security testing, to resolve any issues before deployment.",
   },
   {
-    id: 1,
+    id: 6,
     icon2: (
       <svg
         width="95"

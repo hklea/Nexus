@@ -8,62 +8,75 @@ import AboutUs from "../components/AboutUs/AboutUs";
 import Header from "../components/Header";
 import Entry from "../components/Entry";
 import DesignObject from "../components/DesignObject";
+import Transition from "../components/Common/Transition";
+import wp from "../assets/Icons/EntryPage/wp.png";
+import { handleWhatsAppClick } from "../utilities/EntryPage/CallingSocial";
 
 function EntryPage() {
   return (
-    <div className="bg-white">
-      {/* Duhet me ndryshu Logon  */}
-      <div>
+    <div className="bg-white relative">
+      <div id="home">
         <Header />
       </div>
 
-      {/* DO ndryshohen komplet  */}
-      <div className="">
+      <div>
         <Entry />
       </div>
 
-      {/* DO ndryshohen komplet  */}
-      <div>
-        <DesignObject />
-      </div>
+      <Transition>
+        <div id="design">
+          <DesignObject />
+        </div>
+      </Transition>
 
-      {/* Mund te ndryshohen fontet ose size i textit  */}
-      <div>
-        <AboutUs />
-      </div>
+      <Transition>
+        <div id="about">
+          <AboutUs />
+        </div>
+      </Transition>
 
-      <br />
-      <br />
-      <br />
-      {/* Mund te ndryshohen fontet ose size i textit  */}
-      <div>
-        <OurStory />
-      </div>
+      <Transition>
+        <div id="our-story">
+          <OurStory />
+        </div>
+      </Transition>
 
-      {/* Mund te ndryshohen fontet ose size i textit, ka nje icon nje prb nje rreth kot */}
-      <div>
-        <Services />
-      </div>
+      <Transition>
+        <div id="services">
+          <Services />
+        </div>
+      </Transition>
 
-      {/* Duet pare shkrimi me mire dhe responsivnes*/}
-      <div className="h-[500px] flex items-center justify-center text-center">
-        <ProjectIdea />
-      </div>
+      <Transition>
+        <div
+          id="project-idea"
+          className="h-[500px] flex items-center justify-center text-center"
+        >
+          <ProjectIdea />
+        </div>
+      </Transition>
 
-      {/* duhet te behet me buttona to scroll anash*/}
-      <div>
-        <Portofolio />
-      </div>
+      <Transition>
+        <div id="portfolio">
+          <Portofolio />
+        </div>
+      </Transition>
 
-      {/*It has a problem with gmail -> text is long for 320px and lower */}
-      {/* Mund te behen remove borders where is not focus,  duhet te ndryshohet buttoni hover  */}
-      <div className="bg-white">
-        <Contact />
-      </div>
+      <Transition>
+        <div id="contact" className="bg-white">
+          <Contact />
+        </div>
+      </Transition>
 
-      {/* Ka shume info */}
       <div>
         <PageFooter />
+      </div>
+
+      <div
+        className="fixed bottom-0 right-0 mb-4 mr-4 cursor-pointer"
+        onClick={handleWhatsAppClick}
+      >
+        <img src={wp} alt="" className="h-16" />
       </div>
     </div>
   );

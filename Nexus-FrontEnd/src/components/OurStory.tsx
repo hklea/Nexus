@@ -3,7 +3,7 @@ import doraImg from "../assets/Icons/EntryPage/dora.png";
 function OurStory() {
   const ourStoryInfo = {
     title: "Our Story",
-    text: "Founded by a team of passionate programmers, Nexus was born out of a desire to push the boundaries of technology and deliver solutions that matter. Our mission is to empower businesses with cutting-edge technology, foster innovation, and create impactful digital experiences.",
+    text: "Founded by a team of passionate programmers, ChiefSoft was born out of a desire to push the boundaries of technology and deliver solutions that matter. Our mission is to empower businesses with cutting-edge technology, foster innovation, and create impactful digital experiences.",
   };
   return (
     <div className="w-full h-[450px] xxs:h-[450px] lg:h-[515px] flex flex-row">

@@ -1,10 +1,21 @@
 /** @type {import('tailwindcss').Config} */
 const colors = require("tailwindcss/colors");
+const flowbite = require("flowbite-react/tailwind");
 export default {
-  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
+  content: ["./src/**/*.{html,js,ts,jsx,tsx}", flowbite.content()],
   darkMode: "class",
   theme: {
     extend: {
+      animation: {
+        'progress-bar': 'progressBar 5s linear forwards',
+        'progress-bar-3': 'progressBar 3s linear forwards',
+      },
+      keyframes: {
+        progressBar: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+      },
       colors: {
         current: "currentColor",
         transparent: "transparent",
@@ -69,10 +80,12 @@ export default {
       },
       fontFamily: {
         lato: ["Lato", "sans-serif"],
-        michroma: ['Michroma', 'sans-serif'],
-        'kumbh-sans': ['"Kumbh Sans"', 'sans-serif'],
+        michroma: ["Michroma", "sans-serif"],
+        "kumbh-sans": ['"Kumbh Sans"', "sans-serif"],
       },
     },
   },
-  plugins: [],
+  plugins: [
+    flowbite.plugin(),
+  ],
 };
