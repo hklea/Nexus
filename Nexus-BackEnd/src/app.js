@@ -13,7 +13,7 @@ const sessionConfig = require("./config/sessionConfig");
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://cheifsoft.onrender.com",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })

@@ -32,6 +32,8 @@ const logout = (req, res) => {
 };
 
 const status = (req, res) => {
+  console.log(req.body)
+  console.log("User: ",req.user)
   if (req.isAuthenticated()) {
     console.log(req.user.googleId ? "Logged in with Google" : "Logged in manually");
     res.json({ message: "User is authenticated", user: req.user });
