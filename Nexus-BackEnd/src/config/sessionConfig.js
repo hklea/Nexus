@@ -17,7 +17,7 @@ const sessionConfig = session({
     mongooseConnection: mongoose.connection,
   }),
   cookie: {
-    secure: process.env.NODE_ENV === 'false', 
+    secure: process.env.NODE_ENV === 'true', 
     maxAge: 1000 * 60 * 60 * 24 * 30
   },
 });
