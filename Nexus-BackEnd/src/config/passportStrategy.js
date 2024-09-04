@@ -36,7 +36,7 @@ module.exports = (passport) => {
       {
         clientID: clientid,
         clientSecret: clientsecret,
-        callbackURL: "http://localhost:3000/auth/google/callback",
+        callbackURL: "https://nexus-express.onrender.com/auth/google/callback",
         scope: ["profile", "email"],
       },
       async (accessToken, refreshToken, profile, done) => {
