@@ -13,7 +13,7 @@ const sessionConfig = require("./config/sessionConfig");
 
 app.use(
   cors({
-    origin: "https://cheifsoft.onrender.com",
+    origin: "https://chiefsoft.onrender.com",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
