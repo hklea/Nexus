@@ -10,8 +10,8 @@ const googleAuth = (req, res, next) => {
 
 const googleAuthCallback = (req, res, next) => {
   passport.authenticate("google", {
-    successRedirect: "http://localhost:5173/",
-    failureRedirect: "http://localhost:5173/signin",
+    successRedirect: "https://cheifsoft.onrender.com/",
+    failureRedirect: "https://cheifsoft.onrender.com/signin",
   })(req, res, next);
 };
 
