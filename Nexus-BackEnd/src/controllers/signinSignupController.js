@@ -22,9 +22,8 @@ const register = async (req, res) => {
 };
 
 const login = (req, res) => {
-  console.log('Session ID log: ', req.sessionID);
-  console.log('Session log: ', req.session);
-  console.log("Cookie: ", req.cookies);
+
+    console.log('Session:', req.session.cookies);
   res.status(200).json({ message: "Logged in successfully" });
 };
 
@@ -34,11 +33,8 @@ const logout = (req, res) => {
 };
 
 const status = (req, res) => {
-  console.log(req.body)
-  console.log("User: ",req.user)
-  console.log('Session ID:', req.sessionID);
-  console.log('Session:', req.session);
-  console.log("Cookie: ", req.cookies);
+
+  console.log('Session:', req.session.cookies);
   if (req.isAuthenticated()) {
     console.log(req.user.googleId ? "Logged in with Google" : "Logged in manually");
     res.json({ message: "User is authenticated", user: req.user });
