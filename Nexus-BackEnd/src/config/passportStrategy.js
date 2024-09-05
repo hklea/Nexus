@@ -13,7 +13,7 @@ module.exports = (passport) => {
   passport.use(new LocalStrategy(
     { usernameField: 'email' },
     async (email, password, done) => {
-            console.log("Davideeee: ", {email})
+            
       try {
         const user = await userdb.findOne({ email });
         if (!user) {
@@ -67,7 +67,7 @@ module.exports = (passport) => {
   
 
   passport.serializeUser((user, done) => {
-    // Save both the user ID and the strategy used
+        console.log("User nishi: ", user);
     done(null, { id: user.id, strategy: user.googleId ? 'google' : 'local' });
   });
   
