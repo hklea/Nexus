@@ -69,7 +69,7 @@ module.exports = (passport) => {
   
 
   passport.serializeUser((user, done) => {
-        console.log("User nishi: ", user);
+    
     done(null, { id: user.id, strategy: user.googleId ? 'google' : 'local' });
   });
   
