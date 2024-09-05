@@ -6,6 +6,7 @@ require("dotenv").config(); // Load environment variables
 
 const sessionConfig = session({
   // Replace with your own secret key
+    secret: "23456789",
   resave: false, // Set to false to avoid resaving sessions if they are not modified
   // Set to false to avoid creating sessions for unauthenticated users
   store: MongoStore.create({
