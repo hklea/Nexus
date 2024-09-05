@@ -28,11 +28,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
-app.use((req, res, next) => {
-  console.log('Session app:', req.session);
-  console.log('User app:', req.user);
-  next();
-});
+
 
 
 
