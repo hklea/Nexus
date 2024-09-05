@@ -22,8 +22,6 @@ const register = async (req, res) => {
 };
 
 const login = (req, res) => {
-
-    console.log('Session:', req.session.cookies);
   res.status(200).json({ message: "Logged in successfully" });
 };
 
