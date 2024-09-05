@@ -16,6 +16,7 @@ module.exports = (passport) => {
             
       try {
         const user = await userdb.findOne({ email });
+        console.log('User from db: ', user);
         if (!user) {
           return done(null, false, { message: 'Incorrect email.' });
         }
@@ -23,6 +24,7 @@ module.exports = (passport) => {
         if (!match) {
           return done(null, false, { message: 'Incorrect password.' });
         }
+           console.log('Is user okay> : ', user);
         return done(null, user); // Save the whole user object
       } catch (error) {
         console.log('Error during LocalStrategy authentication:', error);
