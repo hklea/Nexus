@@ -18,7 +18,9 @@ const sessionConfig = session({
   }),
   cookie: {
     secure: process.env.NODE_ENV === 'production', 
-    maxAge: 1000 * 60 * 60 * 24 * 30
+    maxAge: 1000 * 60 * 60 * 24 * 30,
+    httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
+    sameSite: 'strict',
   },
 });
 
