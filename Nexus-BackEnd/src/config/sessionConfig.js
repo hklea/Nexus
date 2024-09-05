@@ -6,7 +6,10 @@ const sessionConfig = session({
   secret: process.env.SESSION_SECRET || 'your_secret_key',
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+  store: MongoStore.create({
+    mongoUrl: process.env.DATABASE, // MongoDB connection string
+    mongooseConnection: mongoose.connection,
+  }),
   cookie: {
     sameSite: 'None',
     secure: true,
