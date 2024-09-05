@@ -1,38 +1,34 @@
 // config/passport.js
-const LocalStrategy = require('passport-local').Strategy;
-const userdb = require('../models/userSchema')
+const LocalStrategy = require("passport-local").Strategy;
+const userdb = require("../models/userSchema");
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 // Load environment variables
 
-
 module.exports = (passport) => {
-
   const clientid = process.env.CLIENT_ID;
   const clientsecret = process.env.CLIENT_SECRET;
-  
-  passport.use(new LocalStrategy(
-    { usernameField: 'email' },
-    async (email, password, done) => {
-            
-      try {
-        const user = await userdb.findOne({ email });
-        console.log('User from db: ', user);
-        if (!user) {
-          return done(null, false, { message: 'Incorrect email.' });
+
+  passport.use(
+    new LocalStrategy(
+      { usernameField: "email" },
+      async (email, password, done) => {
+        try {
+          const user = await userdb.findOne({ email });
+          if (!user) {
+            return done(null, false, { message: "Incorrect email." });
+          }
+          const match = await user.comparePassword(password);
+          if (!match) {
+            return done(null, false, { message: "Incorrect password." });
+          }
+          return done(null, user); // Save the whole user object
+        } catch (error) {
+          console.log("Error during LocalStrategy authentication:", error);
+          return done(error);
         }
-        const match = await user.comparePassword(password);
-        if (!match) {
-          return done(null, false, { message: 'Incorrect password.' });
-        }
-           console.log('Is user okay> : ', user);
-        return done(null, user); // Save the whole user object
-      } catch (error) {
-        console.log('Error during LocalStrategy authentication:', error);
-        return done(error);
       }
-    }
-  ));
-  
+    )
+  );
 
   passport.use(
     new OAuth2Strategy(
@@ -45,7 +41,7 @@ module.exports = (passport) => {
       async (accessToken, refreshToken, profile, done) => {
         try {
           let user = await userdb.findOne({ googleId: profile.id });
-          const firstName = profile.displayName.split(' ')[0]; 
+          const firstName = profile.displayName.split(" ")[0];
           if (!user) {
             user = new userdb({
               googleId: profile.id,
@@ -54,10 +50,10 @@ module.exports = (passport) => {
               image: profile.photos[0].value,
               username: firstName,
             });
-            
+
             await user.save();
           }
-  
+
           return done(null, user); // Save the whole user object
         } catch (error) {
           console.error("Error during OAuth callback:", error);
@@ -66,22 +62,19 @@ module.exports = (passport) => {
       }
     )
   );
-  
 
   passport.serializeUser((user, done) => {
-    
-    done(null, { id: user.id, strategy: user.googleId ? 'google' : 'local' });
+    console.log('Serializing user:', user);
+    done(null, { id: user._id, strategy: user.googleId ? 'google' : 'local' });
   });
   
   passport.deserializeUser(async (data, done) => {
-    console.log("provaaaaaaaaaaaaaaaaaaaaaaa:", data)
+    console.log("Deserializing user with data:", data);
     try {
       let user;
       if (data.strategy === 'google') {
-        // If the strategy was Google, find the user in the Google users collection
-        user = await userdb.findById(data.id).exec();
+        user = await userdb.findOne({ googleId: data.id }).exec();
       } else {
-        // Otherwise, assume it's a local user
         user = await userdb.findById(data.id).exec();
       }
   
@@ -94,5 +87,17 @@ module.exports = (passport) => {
       done(err);
     }
   });
-    
+  
+
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.status(401).json({ message: 'Authentication failed' });
+  
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+      res.status(200).json({ message: 'Logged in successfully', user });
+    });
+  })(req, res, next);
+
+  
 };
