@@ -13,11 +13,12 @@ const sessionConfig = require("./config/sessionConfig");
 
 app.use(
   cors({
-    origin: "https://chiefsoft.onrender.com",
+    origin: "*",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
 );
+
 app.use(express.json());
 
 
