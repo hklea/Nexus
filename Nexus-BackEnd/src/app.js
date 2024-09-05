@@ -13,7 +13,11 @@ const sessionConfig = require("./config/sessionConfig");
 
 app.use(
   cors({
-    origin: "*",
+     origin: function (origin, callback) {
+    // You can add more logic here to handle different origins
+    // For now, we'll allow all origins
+    callback(null, true);
+  },
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
