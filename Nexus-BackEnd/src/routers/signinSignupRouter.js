@@ -9,7 +9,7 @@ const { register, login, logout, status } = require('../controllers/signinSignup
 router.post('/register', register);
 
 // Login route
-router.post('/login', passport.authenticate('local'), login);
+router.post('/login',passport.authenticate('local', { session: true }), login);
 
 // Logout route
 router.post('/logout', logout);
