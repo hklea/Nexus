@@ -19,7 +19,7 @@ const sessionConfig = session({
   },
 
   saveUninitialized: true,
-  secret: process.env.RDS_COOKIE_SECRET,
+
 });
 
 module.exports = sessionConfig;
