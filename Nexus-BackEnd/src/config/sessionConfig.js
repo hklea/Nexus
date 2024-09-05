@@ -11,9 +11,9 @@ const sessionConfig = session({
     mongooseConnection: mongoose.connection,
   }),
   cookie: {
-    sameSite: 'None',
-    secure: true,
-    httpOnly: true,
+
+    secure: false,
+
     maxAge: 2592000000, // 30 days
   },
 });
