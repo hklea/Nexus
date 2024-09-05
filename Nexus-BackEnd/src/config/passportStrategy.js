@@ -72,7 +72,7 @@ module.exports = (passport) => {
   });
   
   passport.deserializeUser(async (data, done) => {
-    console.log("prova:", data)
+    console.log("provaaaaaaaaaaaaaaaaaaaaaaa:", data)
     try {
       let user;
       if (data.strategy === 'google') {
