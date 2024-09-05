@@ -19,7 +19,6 @@ const sessionConfig = session({
 
   saveUninitialized: true,
   secret: process.env.RDS_COOKIE_SECRET,
-  store: testEnvironment ? null : new require("connect-pg-simple")(session)(),
 });
 
 module.exports = sessionConfig;
