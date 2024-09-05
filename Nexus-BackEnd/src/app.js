@@ -27,7 +27,15 @@ app.use(sessionConfig);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('session'))
-app.use(express.urlencoded({ extended: false }));
+
+
+app.use((req, res, next) => {
+  console.log("Session ID:", req.sessionID);
+  console.log("Session Data:", req.session);
+  console.log("User:", req.user);
+  next();
+});
+
 
 
 
