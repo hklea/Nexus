@@ -24,7 +24,7 @@ const register = async (req, res) => {
       res.cookie("jwt", token, { 
         httpOnly: true, 
         secure: true, // Ensure this is set to true in production
-        sameSite: 'Strict', 
+        sameSite: 'Any', 
         maxAge: 2592000000 // 30 days
       });
       res.status(201).json({ message: "User registered successfully" });
@@ -52,7 +52,7 @@ const login = async (req, res) => {
     res.cookie("jwt", token, { 
       httpOnly: true, 
       secure: true, // Ensure this is set to true in production
-      sameSite: 'Strict', 
+      sameSite: 'Any
       maxAge: 2592000000 // 30 days
     });
     console.log("Logged in successfully");
@@ -67,7 +67,7 @@ const logout = (req, res) => {
   res.clearCookie("jwt", { 
     httpOnly: true, 
     secure: true, // Ensure this is set to true in production
-    sameSite: 'Strict'
+    sameSite: 'Any'
   });
   res.json({ message: "Logged out successfully" });
 };
