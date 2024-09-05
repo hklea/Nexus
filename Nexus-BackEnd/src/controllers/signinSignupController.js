@@ -22,6 +22,8 @@ const register = async (req, res) => {
 };
 
 const login = (req, res) => {
+    console.log("Session details login :", req.session);
+  console.log("User in session login:", req.user);
   res.status(200).json({ message: "Logged in successfully" });
 };
 
@@ -32,7 +34,9 @@ const logout = (req, res) => {
 
 const status = (req, res) => {
 
-  console.log('Session:', req.session.cookies);
+    console.log("Session details:", req.session);
+  console.log("User in session:", req.user);
+
   if (req.isAuthenticated()) {
     console.log(req.user.googleId ? "Logged in with Google" : "Logged in manually");
     res.json({ message: "User is authenticated", user: req.user });
