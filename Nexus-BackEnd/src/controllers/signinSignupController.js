@@ -73,8 +73,9 @@ const logout = (req, res) => {
 };
 
 const checkLoginStatus = async (req, res) => {
+  console.log("Cookies: , res.cookies)
   const token = req.cookies.jwt; // Retrieve the JWT from cookies
-
+  
   if (!token) {
     return res.status(401).json({ message: "Not logged in" });
   }
