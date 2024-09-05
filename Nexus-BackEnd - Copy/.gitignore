@@ -1,0 +1,28 @@
+# Dependency directories
+node_modules/
+
+# Environment variables file (if used)
+.env
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# IDE or editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+
+# OS or editor specific files
+.DS_Store
+Thumbs.db
+
+# Configuration files that may contain sensitive information
+config.js

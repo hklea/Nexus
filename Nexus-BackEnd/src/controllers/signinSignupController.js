@@ -1,46 +1,81 @@
-// controllers/authController.js
+
 const User = require("../models/userSchema");
-const { loginSuccess } = require("./googleAuthController");
+const { generateToken } = require("../utils/jwtUtils");
+const { verifyToken } = require("../utils/jwtUtils");
 
 const register = async (req, res) => {
   const { email, password, username } = req.body;
 
   try {
-    const userexist = await User.findOne({ email }); // Await the query result
 
-    if (!userexist) {
+    console.log("Registration request body:", req.body);
+
+
+    const userExist = await User.findOne({ email });
+
+    if (!userExist) {
+   
       const user = new User({ email, password, username });
       await user.save();
+
+      const token = generateToken(user);
+
+  
+      res.cookie("jwt", token, { httpOnly: true, maxAge: 2592000000 }); // 30 days
       res.status(201).json({ message: "User registered successfully" });
     } else {
-      res.status(400).json({ message: "User already exists!!!" });
+      res.status(400).json({ message: "User already exists!" });
     }
   } catch (error) {
-    console.log(error);
+    console.error("Error during registration:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
-const login = (req, res) => {
-  
-  res.status(200).json({ message: "Logged in successfully" });
-};
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
 
-const logout = (req, res) => {
-  req.logout();
-  res.json({ message: "Logged out successfully" });
-};
-
-const status = (req, res) => {
-
-
-  if (req.isAuthenticated()) {
-    console.log(req.user.googleId ? "Logged in with Google" : "Logged in manually");
-    res.json({ message: "User is authenticated", user: req.user });
-  } else {
-    res.json({ message: "User is not authenticated" });
+    if (!user || !(await user.comparePassword(password))) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+    const token = generateToken(user);
+    res.cookie("jwt", token, { httpOnly: true, maxAge: 2592000000 });
+    // 30 days
+    res.status(200).json({ message: "Logged in successfully" });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
+const logout = (req, res) => {
+  res.clearCookie("jwt");
+  res.json({ message: "Logged out successfully" });
+};
 
-module.exports = { register, login, logout, status };
+const checkLoginStatus = async (req, res) => {
+  const token = req.cookies.jwt; // Retrieve the JWT from cookies
+
+  if (!token) {
+    return res.status(401).json({ message: "Not logged in" });
+  }
+
+  try {
+    const decoded = await verifyToken(token); // Verify the JWT
+
+    const user = await User.findById(decoded.id); // Find the user by ID from token payload
+
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "User is logged in", user: { email: user.email, username: user.username } });
+  } catch (error) {
+    console.error("Error verifying token:", error);
+    res.status(401).json({ message: "Invalid or expired token" });
+  }
+};
+
+module.exports = { register, login, logout , checkLoginStatus};
