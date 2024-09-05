@@ -1,23 +1,17 @@
-// config/sessionConfig.js
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
-const mongoose = require("mongoose");
-require("dotenv").config(); // Load environment variables
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const mongoose = require('mongoose');
 
 const sessionConfig = session({
-  // Replace with your own secret key
-  secret: "23456789",
-  store: MongoStore.create({
-    mongoUrl: process.env.DATABASE, // MongoDB connection string
-    mongooseConnection: mongoose.connection,
-  }),
- resave: false,
+  secret: process.env.SESSION_SECRET || 'your_secret_key',
+  resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
   cookie: {
-    maxAge: 2592000000, // 30 days
-    secure: process.env.NODE_ENV === "production", // true if HTTPS, false otherwise
+    sameSite: 'None',
+    secure: true,
     httpOnly: true,
-    sameSite: "None", // "None" for cross-origin requests
+    maxAge: 2592000000, // 30 days
   },
 });
 
