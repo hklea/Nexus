@@ -1,6 +1,6 @@
 const User = require("../models/userSchema");
 const { generateToken, verifyToken } = require("../utils/jwtUtils");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
   const { email, password, username } = req.body;
@@ -21,11 +21,11 @@ const register = async (req, res) => {
 
       const token = generateToken(user);
 
-      res.cookie("jwt", token, { 
-        httpOnly: true, 
+      res.cookie("jwt", token, {
+        httpOnly: true,
         secure: true, // Ensure this is set to true in production
-        sameSite: 'Any', 
-        maxAge: 2592000000 // 30 days
+        sameSite: "none",
+        maxAge: 2592000000, // 30 days
       });
       res.status(201).json({ message: "User registered successfully" });
     } else {
@@ -49,11 +49,11 @@ const login = async (req, res) => {
 
     const token = generateToken(user);
 
-    res.cookie("jwt", token, { 
-      httpOnly: true, 
+    res.cookie("jwt", token, {
+      httpOnly: true,
       secure: true, // Ensure this is set to true in production
-      sameSite: 'Any
-      maxAge: 2592000000 // 30 days
+      sameSite: "none",
+      maxAge: 2592000000, // 30 days
     });
     console.log("Logged in successfully");
     res.status(200).json({ message: "Logged in successfully" });
@@ -64,10 +64,10 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  res.clearCookie("jwt", { 
-    httpOnly: true, 
+  res.clearCookie("jwt", {
+    httpOnly: true,
     secure: true, // Ensure this is set to true in production
-    sameSite: 'Any'
+    sameSite: "none",
   });
   res.json({ message: "Logged out successfully" });
 };
