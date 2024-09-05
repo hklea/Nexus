@@ -13,7 +13,7 @@ const sessionConfig = session({
   cookie: {
 
     secure: false,
-
+  httpOnly: false,
     maxAge: 2592000000, // 30 days
   },
 });
