@@ -1,29 +1,52 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const passport = require('passport');
+const OAuth2Strategy = require("passport-google-oauth2").Strategy;
+const User = require('../models/userSchema');
 
-const userSchema = new mongoose.Schema({
-  username: { type: String }, 
-  email: { type: String, required: true, unique: true },
-  password: { type: String }, 
-  googleId: { type: String }, 
-  displayName: { type: String }, 
-  image: { type: String }, 
-  subscribe: {type: Boolean, default: false},
-}, { timestamps: true });
+passport.use(
+  new OAuth2Strategy({
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL: "/auth/google/callback",
+      scope: ["profile", "email"],
+    },
+    async (accessToken, refreshToken, profile, done) => { 
+      try {
+        let user = await User.findOne({ googleId: profile.id });
+        if (user) {
+          // Update existing user with data from Google if fields are missing
+          user.displayName = user.displayName || profile.displayName;
+          user.email = user.email || profile.emails[0].value;
+          user.image = user.image || profile.photos[0].value;
 
+          // Save the updated user information
+          await user.save();
+        } else {
+          // Create a new user if none exists
+          user = new User({
+            googleId: profile.id,
+            displayName: profile.displayName,
+            email: profile.emails[0].value,
+            image: profile.photos[0].value,
+          });
+          await user.save();
+        }
+        return done(null, user);
+      } catch (error) {
+        return done(error, null);
+      }
+    })
+);
 
-userSchema.pre('save', async function (next) {
-  if (this.password && this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
-  next();
+// Serialize and deserialize user
+passport.serializeUser((user, done) => {
+  done(null, user._id);
 });
 
-
-userSchema.methods.comparePassword = async function (candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
-};
-
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (error) {
+    done(error, null);
+  }
+});
