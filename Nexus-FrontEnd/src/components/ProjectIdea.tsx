@@ -23,9 +23,8 @@ function ProjectIdea() {
   }, [isReady]);
 
   const handleSubscribe = async () => {
-    const userString = sessionStorage.getItem("user");
-    const user: User = userString ? JSON.parse(userString) : null;
-    await subscribe(user._id);
+
+    await subscribe();
     setSub((prevSub) => !prevSub);
   };
 

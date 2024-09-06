@@ -28,9 +28,13 @@ export async function makeContact(contact: Contacts) {
   }
 }
 
-export async function subscribe(id: string) {
+export async function subscribe() {
   try {
-    const result = await axiosInstance.put(`toggle-subscribe/${id}`);
+    const result = await axiosInstance.put(
+      `toggle-subscribe`, // No need to pass the `id` in the URL
+      {}, // No request body needed
+      { withCredentials: true } // Ensure cookies are sent with the request
+    );
     return result.data.subscribe;
   } catch (error) {
     console.log("error: ", error);

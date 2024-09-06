@@ -8,8 +8,6 @@ const register = async (req, res) => {
   try {
     console.log("Registration request body:", req.body);
 
-    // Validate input data here if needed
-
     const userExist = await User.findOne({ email });
 
     if (!userExist) {
@@ -19,14 +17,6 @@ const register = async (req, res) => {
       const user = new User({ email, password: hashedPassword, username });
       await user.save();
 
-      const token = generateToken(user);
-
-      res.cookie("jwt", token, {
-        httpOnly: true,
-        secure: true, // Ensure this is set to true in production
-        sameSite: "none",
-        maxAge: 2592000000, // 30 days
-      });
       res.status(201).json({ message: "User registered successfully" });
     } else {
       res.status(400).json({ message: "User already exists!" });
@@ -39,16 +29,13 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const user = await User.findOne({ email });
-
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
     const token = generateToken(user);
-
     res.cookie("jwt", token, {
       httpOnly: true,
       secure: true, // Ensure this is set to true in production
@@ -64,25 +51,27 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  res.clearCookie("jwt", {
-    httpOnly: true,
-    secure: true, // Ensure this is set to true in production
-    sameSite: "none",
+  Object.keys(req.cookies).forEach((cookieName) => {
+    res.clearCookie(cookieName, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none", 
+    });
   });
-  res.json({ message: "Logged out successfully" });
+
+  res.status(200).json({ message: "Logged out successfully" });
 };
 
 const checkLoginStatus = async (req, res) => {
-  console.log("Cookies:" , res.cookies)
-  const token = req.cookies.jwt; // Retrieve the JWT from cookies
-  
+  console.log("Cookies:", req.cookies);
+
+  const token = req.cookies.jwt; 
   if (!token) {
     return res.status(401).json({ message: "Not logged in" });
   }
 
   try {
     const decoded = await verifyToken(token); // Verify the JWT
-
     const user = await User.findById(decoded.id); // Find the user by ID from token payload
 
     if (!user) {
