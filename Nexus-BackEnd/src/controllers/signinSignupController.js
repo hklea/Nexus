@@ -11,10 +11,8 @@ const register = async (req, res) => {
     const userExist = await User.findOne({ email });
 
     if (!userExist) {
-      // Hash password before saving
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      const user = new User({ email, password: hashedPassword, username });
+      // Directly save the user without manual hashing
+      const user = new User({ email, password, username });
       await user.save();
 
       res.status(201).json({ message: "User registered successfully" });
@@ -29,9 +27,22 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log("login request body:", req.body);
+
   try {
     const user = await User.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    // Compare the plain password with the hashed password stored in the database
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    console.log("Password:", password);
+    console.log("Stored Hash:", user.password);
+    console.log("Password Match:", passwordMatch);
+
+    if (!passwordMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
@@ -49,6 +60,8 @@ const login = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 
 const logout = (req, res) => {
   Object.keys(req.cookies).forEach((cookieName) => {

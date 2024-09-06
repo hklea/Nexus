@@ -10,7 +10,7 @@ const PORT = 3000;
 const User = require('./models/userSchema');
 
 app.use(cors({
-  origin: "https://chiefsoft.onrender.com", // Adjust origin based on your client
+  origin: "http://localhost:5173", // Adjust origin based on your client
   methods: "GET,POST,PUT,DELETE",
   credentials: true,
 }));
