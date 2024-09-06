@@ -11,10 +11,17 @@ import DesignObject from "../components/DesignObject";
 import Transition from "../components/Common/Transition";
 import wp from "../assets/Icons/EntryPage/wp.png";
 import { handleWhatsAppClick } from "../utilities/EntryPage/CallingSocial";
+import { useNavigate } from "react-router-dom";
 
 function EntryPage() {
+  const navigate = useNavigate();
   return (
     <div className="bg-white relative">
+      <button onClick={()=>{
+        navigate('/logout')
+      }}>
+        logout
+      </button>
       <div id="home">
         <Header />
       </div>
