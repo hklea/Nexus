@@ -5,7 +5,7 @@ const {sendMessage, toggleSubscribe} = require('../controllers/contactController
 
 router.post('/contact', sendMessage)
 
-router.put('/toggle-subscribe/:id', toggleSubscribe);
+router.put('/toggle-subscribe', toggleSubscribe);
 
 
 

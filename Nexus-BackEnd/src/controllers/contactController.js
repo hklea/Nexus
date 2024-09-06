@@ -1,6 +1,7 @@
 const User = require("../models/userSchema");
 const Contact = require("../models/contctSchema");
 require('dotenv').config();
+const { verifyToken } = require("../utils/jwtUtils");
 
 const nodemailer = require('nodemailer');
 
@@ -44,24 +45,30 @@ const transporter = nodemailer.createTransport({
     }
   };
 
-const toggleSubscribe = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    console.log(user)
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    user.subscribe = !user.subscribe;
-    await user.save();
-    return res
-      .status(200)
-      .json({
+  const toggleSubscribe = async (req, res) => {
+    try {
+      const token = req.cookies.jwt; 
+      if (!token) {
+        return res.status(401).json({ message: "Not logged in" });
+      }
+      const decoded = await verifyToken(token);
+      const user = await User.findById(decoded.id);
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+
+      user.subscribe = !user.subscribe;
+      await user.save();
+  
+      return res.status(200).json({
         message: `Subscription status updated to ${user.subscribe}`,
         subscribe: user.subscribe,
       });
-  } catch (error) {
-    return res.status(500).json({ message: "An error occurred", error });
-  }
-};
-
+    } catch (error) {
+      console.error("Error toggling subscription:", error);
+      return res.status(500).json({ message: "An error occurred", error });
+    }
+  };
 module.exports = { sendMessage, toggleSubscribe };
