@@ -24,7 +24,7 @@ function LoginPage() {
   }
 
   const loginwithgoogle = async () => {
-    window.open("http://localhost:3000/auth/google/callback", "_self");
+    window.open("http://localhost:3000/auth/google");
   };
 
   return (

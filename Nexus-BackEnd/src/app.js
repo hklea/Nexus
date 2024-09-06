@@ -8,6 +8,26 @@ const jwt = require('jsonwebtoken');
 const { verifyToken } = require("./utils/jwtUtils"); 
 const PORT = 3000;
 const User = require('./models/userSchema');
+const passport = require('passport');
+const session = require("express-session");
+require('./config/passport')
+
+const helmet = require('helmet');
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      fontSrc: ["'self'", "https://nexus-express.onrender.com"],
+      scriptSrc: ["'self'", "https://accounts.google.com"],
+      connectSrc: ["'self'"],
+      imgSrc: ["'self'", "data:"],
+    },
+  })
+);
+
+
+
 
 app.use(cors({
   origin: "https://chiefsoft.onrender.com", // Adjust origin based on your client
@@ -31,6 +51,32 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+
+
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || "YOUR_SECRET_KEY",
+  resave: false,
+  saveUninitialized: true,
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+// Google login route
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+
+// Google callback route
+app.get("/auth/google/callback", passport.authenticate("google", {
+  failureRedirect: "https://nexus-express.onrender.com/login", // Redirect to React login page on failure
+}), (req, res) => {
+  res.redirect("https://nexus-express.onrender.com/"); // Redirect to React dashboard on success
+});
+
+
+
 
 app.get("/users", async (req, res) => {
   try {
