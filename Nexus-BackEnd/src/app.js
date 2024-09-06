@@ -70,9 +70,9 @@ app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "em
 
 // Google callback route
 app.get("/auth/google/callback", passport.authenticate("google", {
-  failureRedirect: "https://nexus-express.onrender.com/login", // Redirect to React login page on failure
+  failureRedirect: "https://chiefsoft.onrender.com/login", // Redirect to React login page on failure
 }), (req, res) => {
-  res.redirect("https://nexus-express.onrender.com/"); // Redirect to React dashboard on success
+  res.redirect("https://chiefsoft.onrender.com/"); // Redirect to React dashboard on success
 });
 
 
