@@ -55,7 +55,7 @@ const logout = (req, res) => {
     res.clearCookie(cookieName, {
       httpOnly: true,
       secure: true,
-      sameSite: "none", 
+      sameSite: "none",
     });
   });
 
@@ -65,7 +65,7 @@ const logout = (req, res) => {
 const checkLoginStatus = async (req, res) => {
   console.log("Cookies:", req.cookies);
 
-  const token = req.cookies.jwt; 
+  const token = req.cookies.jwt;
   if (!token) {
     return res.status(401).json({ message: "Not logged in" });
   }
@@ -80,7 +80,11 @@ const checkLoginStatus = async (req, res) => {
 
     res.status(200).json({
       message: "User is logged in",
-      user: { email: user.email, username: user.username },
+      user: {
+        email: user.email,
+        username: user.username,
+        subscribe: user.subscribe,
+      },
     });
   } catch (error) {
     console.error("Error verifying token:", error);

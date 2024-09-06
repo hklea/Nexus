@@ -11,6 +11,8 @@ import {
   openTikTokPage,
 } from "../utilities/EntryPage/CallingSocial";
 import logo from "../assets/Icons/logo.png";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { handleLogout } from "../api/SigninsignupApi";
 
 function Header() {
   const [scrolledFromTop, setScrolledFromTop] = useState(false);
@@ -32,12 +34,12 @@ function Header() {
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     if (windowWidth < 992) {
-      window.addEventListener('scroll', handleScroll);
+      window.addEventListener("scroll", handleScroll);
     } else {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     }
 
     // Initial check
@@ -46,11 +48,10 @@ function Header() {
     }
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [windowWidth]);
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -216,7 +217,7 @@ function Header() {
             moreSize == "large" ? "w-[140px]" : "w-[100px]"
           }  h-[40px] flex items-center justify-between    `}
         >
-          <div className="flex  w-[0%]  justify-between">
+          <div className="flex  w-[0%] mr-32 lg:mr-0 justify-between">
             <div className=" drop-shadow-2xl">
               <div
                 onClick={() => {
@@ -252,6 +253,24 @@ function Header() {
                   width={moreSize == "large" ? 15 : 13}
                   height={moreSize == "large" ? 15 : 13}
                 />
+              </div>
+            </div>
+            <div>
+              {" "}
+              <div
+                onClick={() => {
+                  handleLogout();
+
+                  window.location.reload();
+                }}
+                className={`${
+                  moreSize == "large"
+                    ? "h-[30px] w-[30px] "
+                    : "h-[23px] w-[23px] "
+                } ml-2  rounded-[50px] cursor-pointer  text-white flex items-center align-middle justify-center`}
+              >
+                {" "}
+                <LogoutIcon />
               </div>
             </div>
           </div>
