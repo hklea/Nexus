@@ -68,16 +68,18 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  Object.keys(req.cookies).forEach((cookieName) => {
-    res.clearCookie(cookieName, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    });
+  res.clearCookie("jwt", {
+    expires: new Date(0),
+    httpOnly: true,
+    secure: true, // Ensure this is set to true in production
+    sameSite: "none",
   });
 
   res.status(200).json({ message: "Logged out successfully" });
 };
+
+
+ 
 
 const checkLoginStatus = async (req, res) => {
   console.log("Cookies:", req.cookies);
