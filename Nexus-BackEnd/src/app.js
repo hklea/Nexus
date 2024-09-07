@@ -21,7 +21,7 @@ const { generateToken } = require("./utils/jwtUtils");
 
 
 app.use(cors({
-  origin: "http://localhost:5173/", // Adjust origin based on your client
+   origin: "https://chiefsoft.onrender.com",  // Adjust origin based on your client
   methods: "GET,POST,PUT,DELETE",
   credentials: true,
 }));
