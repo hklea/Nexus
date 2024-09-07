@@ -3,7 +3,7 @@ import PageFooter from "../components/PageFooter";
 import { useNavigate } from "react-router-dom";
 import Transition from "../components/Common/Transition";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { login } from "../api/SigninsignupApi";
 
 function LoginPage() {
@@ -22,6 +22,10 @@ function LoginPage() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }
+
+  useEffect(()=>{
+
+  },[])
 
   const loginwithgoogle = async () => {
     window.location.href = "https://nexus-express.onrender.com/auth/google";

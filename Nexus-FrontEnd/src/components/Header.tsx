@@ -213,11 +213,10 @@ function Header() {
         </div>
 
         <div
-          className={`${
-            moreSize == "large" ? "w-[140px]" : "w-[100px]"
-          }  h-[40px] flex items-center justify-between    `}
+          className={`  h-[40px] flex items-center justify-around    `}
         >
-          <div className="flex  w-[0%] mr-32 lg:mr-0 justify-between">
+       
+          <div className="flex  w-[0%] mr-9 lg:mr-16 justify-between">
             <div className=" drop-shadow-2xl">
               <div
                 onClick={() => {
@@ -259,22 +258,27 @@ function Header() {
               {" "}
               <div
                 onClick={() => {
-                  handleLogout();
-
-                 
+                  openTikTokPage();
                 }}
                 className={`${
                   moreSize == "large"
                     ? "h-[30px] w-[30px] "
                     : "h-[23px] w-[23px] "
-                } ml-2  rounded-[50px] cursor-pointer  text-white flex items-center align-middle justify-center`}
+                } ml-2  rounded-[5px] cursor-pointer  text-white  hidden lg:flex items-center align-middle justify-center`}
               >
                 {" "}
-                <LogoutIcon />
+                <LogoutIcon
+                  
+                />
               </div>
             </div>
+            <div>
+              {" "}
+              
+            </div>
           </div>
-          <div className="flex lg:hidden text-right cursor-pointer justify-end">
+          <div className="flex lg:hidden text-right cursor-pointer justify-start">
+      
             <More size={moreSize} />
           </div>
         </div>

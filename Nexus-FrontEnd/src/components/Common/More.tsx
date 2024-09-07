@@ -11,6 +11,8 @@ import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import { Link } from "react-scroll";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { handleLogout } from "../../api/SigninsignupApi";
 
 function More({ size }: { size: any }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -67,11 +69,9 @@ function More({ size }: { size: any }) {
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           className=""
         >
-          <MenuItem
-            style={{ paddingBottom: "0px", paddingTop: "0px" }}
-            onClick={handleClose}
-          >
+          <MenuItem style={{ paddingBottom: "0px", paddingTop: "0px" }}>
             <Link
+              className="w-full  "
               to="home"
               spy={true}
               smooth={true}
@@ -101,11 +101,9 @@ function More({ size }: { size: any }) {
             </Link>
           </MenuItem>
 
-          <MenuItem
-            style={{ paddingBottom: "0px", paddingTop: "0px" }}
-            onClick={handleClose}
-          >
+          <MenuItem style={{ paddingBottom: "0px", paddingTop: "0px" }}>
             <Link
+              className="w-full  "
               to="about"
               spy={true}
               smooth={true}
@@ -116,7 +114,7 @@ function More({ size }: { size: any }) {
               }}
               onSetActive={() => handleSetActive("about")}
             >
-              <div className="flex w-[100%] justify-left sm:py-2">
+              <div className="flex w-[100%] justify-left sm:py-4">
                 <GroupsOutlinedIcon
                   className={
                     activeLink === "about" ? "text-black" : "text-[#585858]"
@@ -135,11 +133,9 @@ function More({ size }: { size: any }) {
             </Link>
           </MenuItem>
 
-          <MenuItem
-            style={{ paddingBottom: "0px", paddingTop: "0px" }}
-            onClick={handleClose}
-          >
+          <MenuItem style={{ paddingBottom: "0px", paddingTop: "0px" }}>
             <Link
+              className="w-full  "
               to="services"
               spy={true}
               smooth={true}
@@ -150,7 +146,7 @@ function More({ size }: { size: any }) {
               }}
               onSetActive={() => handleSetActive("services")}
             >
-              <div className="flex w-[100%] justify-left sm:py-2">
+              <div className="flex w-[100%] justify-left sm:py-4">
                 <DevicesOutlinedIcon
                   className={
                     activeLink === "services" ? "text-black" : "text-[#585858]"
@@ -169,11 +165,9 @@ function More({ size }: { size: any }) {
             </Link>
           </MenuItem>
 
-          <MenuItem
-            style={{ paddingBottom: "0px", paddingTop: "0px" }}
-            onClick={handleClose}
-          >
+          <MenuItem style={{ paddingBottom: "0px", paddingTop: "0px" }}>
             <Link
+              className="w-full  "
               to="portfolio"
               spy={true}
               smooth={true}
@@ -184,7 +178,7 @@ function More({ size }: { size: any }) {
               }}
               onSetActive={() => handleSetActive("portfolio")}
             >
-              <div className="flex w-[100%] justify-around sm:py-2">
+              <div className="flex w-[100%] justify-around sm:py-4">
                 <PublicOutlinedIcon
                   className={
                     activeLink === "portfolio" ? "text-black" : "text-[#585858]"
@@ -203,11 +197,12 @@ function More({ size }: { size: any }) {
             </Link>
           </MenuItem>
 
-          <MenuItem
-            style={{ paddingBottom: "0px", paddingTop: "0px" }}
-            onClick={handleClose}
-          >
+
+
+
+          <MenuItem style={{ paddingBottom: "0px", paddingTop: "0px" }}>
             <Link
+              className="w-full  "
               to="contact"
               spy={true}
               smooth={true}
@@ -218,7 +213,7 @@ function More({ size }: { size: any }) {
               }}
               onSetActive={() => handleSetActive("contact")}
             >
-              <div className="flex w-[100%] justify-around sm:py-2">
+              <div className="flex w-[100%] sm:py-4">
                 <PhoneOutlinedIcon
                   className={
                     activeLink === "contact" ? "text-black" : "text-[#585858]"
@@ -233,6 +228,38 @@ function More({ size }: { size: any }) {
                 >
                   CONTACT
                 </p>
+              </div>
+            </Link>
+          </MenuItem>
+
+          <MenuItem  style={{ paddingBottom: "0px", paddingTop: "0px" }}>
+            <Link
+              className="w-full  "
+              to="contact"
+              spy={true}
+              smooth={true}
+              duration={300}
+              onClick={() => {
+                handleClose();
+                handleLogout();
+              }}
+              onSetActive={() => handleSetActive("contact")}
+            >
+              <div className="flex w-[100%]  sm:py-4">
+                <LogoutIcon
+                  className={
+                    activeLink === "contact" ? "text-black" : "text-[#585858]"
+                  }
+                />
+                <p
+                  className={`text-[12.3px] grid items-center text-start font-lato ml-[10px] ${
+                    activeLink === "contact"
+                      ? "text-black font-extrabold"
+                      : "text-[#585858]"
+                  }`}
+                >
+                  LOG OUT
+                </p> 
               </div>
             </Link>
           </MenuItem>
