@@ -2,25 +2,46 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
-const axios = require('axios');
-const User = require('./models/userSchema');
+require("./Database/conn"); // Ensure this file connects to your database
+const cookieParser = require("cookie-parser"); // For handling cookies
+const jwt = require("jsonwebtoken");
+const axios = require("axios"); // For making HTTP requests
+const { verifyToken, generateToken } = require("./utils/jwtUtils");
 const PORT = 3000;
-require("./Database/conn"); 
+const User = require("./models/userSchema");
+const session = require("express-session");
+const helmet = require("helmet");
 
-const { generateToken, verifyToken } = require("./utils/jwtUtils");
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      fontSrc: ["'self'", "https://nexus-express.onrender.com"],
+      scriptSrc: ["'self'", "https://accounts.google.com"],
+      connectSrc: ["'self'"],
+      imgSrc: ["'self'", "data:"],
+    },
+  })
+);
 
-app.use(cors({
-
-   origin: "https://chiefsoft.onrender.com",  // Adjust origin based on your client
-
-  methods: "GET,POST,PUT,DELETE",
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "https://chiefsoft.onrender.com", // Adjust origin based on your client
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "YOUR_SECRET_KEY",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 // Middleware to verify JWT from cookies
 app.use((req, res, next) => {
@@ -38,42 +59,50 @@ app.use((req, res, next) => {
 
 // Google login route
 app.get("/auth/google", (req, res) => {
-  const redirectUri = encodeURIComponent("https://nexus-express.onrender.com/auth/google/callback");
-  const googleAuthUrl = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirectUri}&scope=profile email`;
-
+  const redirectUri = "https://nexus-express.onrender.com/auth/google/callback";
+  const googleAuthUrl = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirectUri}&scope=profile email&access_type=offline`;
   res.redirect(googleAuthUrl);
 });
 
+
 // Google callback route
 app.get("/auth/google/callback", async (req, res) => {
-  const { code } = req.query;
+  const code = req.query.code;
+  
+  if (!code) {
+    return res.redirect("https://chiefsoft.onrender.com/login"); // Adjust to your local login route
+  }
+
   try {
-    const tokenResponse = await axios.post(`https://oauth2.googleapis.com/token`, {
+    // Exchange code for access token
+    const { data } = await axios.post(`https://oauth2.googleapis.com/token`, {
       code,
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET,
-      redirect_uri: "https://nexus-express.onrender.com/auth/google/callback",
-      grant_type: 'authorization_code',
+      redirect_uri: "https://nexus-express.onrender.com/auth/google/callback", // Ensure this matches
+      grant_type: "authorization_code",
     });
 
-    const { access_token } = tokenResponse.data;
-    const userInfoResponse = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`);
+    const { access_token } = data;
 
-    const { id, email, name, picture } = userInfoResponse.data;
+    // Get user profile information from Google
+    const { data: profile } = await axios.get(
+      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`
+    );
 
-    let user = await User.findOne({ email });
-
+    let user = await User.findOne({ email: profile.email });
+console.log(user)
     if (user) {
-      user.googleId = user.googleId || id;
-      user.displayName = user.displayName || name;
-      user.image = user.image || picture;
+      user.googleId = user.googleId || profile.id;
+      user.displayName = user.displayName || profile.name;
+      user.image = user.image || profile.picture;
       await user.save();
     } else {
       user = new User({
-        googleId: id,
-        displayName: name,
-        email,
-        image: picture,
+        googleId: profile.id,
+        displayName: profile.name,
+        email: profile.email,
+        image: profile.picture,
       });
       await user.save();
     }
@@ -84,22 +113,23 @@ app.get("/auth/google/callback", async (req, res) => {
     // Set the token as a cookie
     res.cookie("jwt", token, {
       httpOnly: true,
-      secure: true, // Use HTTPS in production
-      sameSite: "none",
+      secure: false, // Set to true in production
+      sameSite: "lax",
       maxAge: 2592000000, // 30 days
     });
 
-    res.redirect("https://chiefsoft.onrender.com/"); // Redirect to React dashboard on success
+    res.redirect("https://nexus-express.onrender.com/"); // Redirect to your local application
   } catch (error) {
-    console.error("Error during Google authentication", error);
-    res.redirect("https://chiefsoft.onrender.com/login"); // Redirect to login on failure
+    console.error("Error during authentication", error);
+    res.redirect("https://nexus-express.onrender.com/login"); // Adjust to your local login route
   }
 });
 
+
 app.get("/users", async (req, res) => {
   try {
-    const users = await User.find();
-    res.status(200).json(users);
+    const users = await User.find(); // Fetch all users from the database
+    res.status(200).json(users); // Send the users as a JSON response
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ message: "Internal Server Error" });
