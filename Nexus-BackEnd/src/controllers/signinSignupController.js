@@ -60,7 +60,7 @@ const login = async (req, res) => {
       sameSite: "none",
       maxAge: 2592000000, // 30 days
     });
-    console.log("Logged in successfully");
+    console.log("Logged in successfullyyy");
     res.status(200).json({ message: "Logged in successfully" });
   } catch (error) {
     console.error("Error during login:", error);
@@ -69,17 +69,21 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  console.log("Cookies:", req.cookies);
-  res.clearCookie("jwt", {
-    expires: new Date(0),
-    httpOnly: true,
-    secure: true, // Ensure this is set to true in production
-    sameSite: "none",
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error destroying session:", err);
+      return res.status(500).json({ message: "Could not log out" });
+    }
+  
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+  
+    res.status(200).json({ message: "Logged out successfully" });
   });
- console.log("After",req.cookie)
-  res.status(200).json({ message: "Logged out successfully" });
-};
-
+}
 
  
 
