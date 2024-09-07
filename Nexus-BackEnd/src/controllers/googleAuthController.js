@@ -15,31 +15,9 @@ const googleAuthCallback = (req, res, next) => {
   })(req, res, next);
 };
 
-const loginSuccess = async (req, res) => {
-  if (req.user) {
-    res
-      .status(200)
-      .json({ message: "User logged in successfully", user: req.user });
-  } else {
-    res.status(400).json({ message: "Not Authorized" });
-  }
-};
 
-const login = (req, res) => {
-  res.status(200).json({ message: "Logged in successfully" });
-};
-
-const logout = (req, res, next) => {
-  req.logout((err) => {
-    if (err) return next(err);
-    res.json({ message: "Logged out successfully" });
-  });
-};
 
 module.exports = {
-  login,
   googleAuth,
   googleAuthCallback,
-  loginSuccess,
-  logout,
 };
