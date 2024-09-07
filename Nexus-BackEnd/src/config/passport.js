@@ -10,7 +10,7 @@ passport.use(
         callbackURL: "/auth/google/callback",
         scope: ["profile", "email"], // Ensure scope is included in the options
     },
-    async (accessToken, refreshToken, profile, done) => { // Debugging: Log the profile
+    async (accessToken, refreshToken, profile, done) => { 
       try {
         let user = await User.findOne({ googleId: profile.id });
         if (!user) {
@@ -20,6 +20,7 @@ passport.use(
             email: profile.emails[0].value,
             image: profile.photos[0].value,
           });
+          console.log("User is saved from google: ", user)
           await user.save();
         }
         return done(null, user);
