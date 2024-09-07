@@ -8,27 +8,37 @@ passport.use(
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
         callbackURL: "/auth/google/callback",
-        scope: ["profile", "email"], // Ensure scope is included in the options
-    },
-    async (accessToken, refreshToken, profile, done) => { // Debugging: Log the profile
-      try {
-        let user = await User.findOne({ googleId: profile.id });
-        if (!user) {
-          user = new User({
-            googleId: profile.id,
-            displayName: profile.displayName,
-            email: profile.emails[0].value,
-            image: profile.photos[0].value,
-          });
-          await user.save();
+        scope: ["profile", "email"], // Ensure scope is included
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        try {
+          // Find user by email instead of googleId
+          let user = await User.findOne({ email: profile.emails[0].value });
+          
+          if (user) {
+            // Update missing Google-specific fields
+            user.googleId = user.googleId || profile.id;
+            user.displayName = user.displayName || profile.displayName;
+            user.image = user.image || profile.photos[0].value;
+            await user.save(); // Save updates if necessary
+          } else {
+            // Create new user if not found
+            user = new User({
+              googleId: profile.id,
+              displayName: profile.displayName,
+              email: profile.emails[0].value,
+              image: profile.photos[0].value,
+            });
+            console.log("User is saved from google: ", user);
+            await user.save();
+          }
+          return done(null, user);
+        } catch (error) {
+          return done(error, null);
         }
-        return done(null, user);
-      } catch (error) {
-        return done(error, null);
       }
-    })
+    )
   );
-  
   
   
   // Serialize and deserialize user

@@ -72,6 +72,7 @@ app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "em
 app.get("/auth/google/callback", passport.authenticate("google", {
   failureRedirect: "https://chiefsoft.onrender.com/login", // Redirect to React login page on failure
 }), (req, res) => {
+  console.log("is heruss")
   res.redirect("https://chiefsoft.onrender.com/"); // Redirect to React dashboard on success
 });
 
