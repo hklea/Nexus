@@ -12,25 +12,25 @@ const passport = require('passport');
 const session = require("express-session");
 require('./config/passport')
 
-const helmet = require('helmet');
+// const helmet = require('helmet');
 
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      fontSrc: ["'self'", "https://nexus-express.onrender.com"],
-      scriptSrc: ["'self'", "https://accounts.google.com"],
-      connectSrc: ["'self'"],
-      imgSrc: ["'self'", "data:"],
-    },
-  })
-);
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       fontSrc: ["'self'", "https://nexus-express.onrender.com"],
+//       scriptSrc: ["'self'", "https://accounts.google.com"],
+//       connectSrc: ["'self'"],
+//       imgSrc: ["'self'", "data:"],
+//     },
+//   })
+// );
 
 
 
 
 app.use(cors({
-  origin: "https://chiefsoft.onrender.com", // Adjust origin based on your client
+  origin: "http://localhost:5173/", // Adjust origin based on your client
   methods: "GET,POST,PUT,DELETE",
   credentials: true,
 }));
@@ -81,7 +81,7 @@ app.get("/auth/google/callback", passport.authenticate("google", {
     sameSite: "none",
     maxAge: 2592000000, // 30 days
   });
-
+console.log("hereeeeeee")
   res.redirect("https://chiefsoft.onrender.com/"); // Redirect to React dashboard on success
 });
 
