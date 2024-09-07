@@ -114,7 +114,7 @@ console.log(user)
     res.cookie("jwt", token, {
       httpOnly: true,
       secure: true, // Set to true in production
-      sameSite: "lax",
+      sameSite: "none",
       maxAge: 2592000000, // 30 days
     });
 
