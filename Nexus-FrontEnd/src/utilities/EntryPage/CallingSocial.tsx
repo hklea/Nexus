@@ -1,23 +1,25 @@
 export const openTikTokPage = () => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    if (isMobile) {
-      window.location.href = "yourapp://app-page";
-    } else {
-      window.open("https://www.tiktok.com/", "_blank");
-    }
-  };
+  if (isMobile) {
+    // Open TikTok user profile via web link (may open the app if installed)
+    window.location.href = "https://www.tiktok.com/@david";
+  } else {
+    window.open("https://www.tiktok.com/@david", "_blank");
+  }
+};
 
-  export  const openInstagramPage = () => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    if (isMobile) {
-      window.location.href = "yourapp://app-page";
-    } else {
-      //Change it to the insta of the company
-      window.open("https://www.instagram.com/david__keci/", "_blank");
-    }
-  };
+export const openInstagramPage = () => {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    // Open Instagram user profile directly in the app
+    window.location.href = "instagram://user?username=david__keci";
+  } else {
+    window.open("https://www.instagram.com/david__keci/", "_blank");
+  }
+};
 
 
  export const handleWhatsAppClick = () => {
