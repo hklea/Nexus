@@ -258,7 +258,7 @@ function Header() {
               {" "}
               <div
                 onClick={() => {
-                  openTikTokPage();
+                  handleLogout();
                 }}
                 className={`${
                   moreSize == "large"
