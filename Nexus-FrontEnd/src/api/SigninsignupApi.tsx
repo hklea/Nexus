@@ -74,7 +74,8 @@ export const handleLogout = async () => {
       { withCredentials: true }
     );
     console.log("data: ", data);
-    localStorage.clear();
+      sessionStorage.clear();
+    window.location.reload();
   } catch (error) {
     console.error("Error logging out: ", error);
   }
