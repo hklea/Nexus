@@ -243,7 +243,7 @@ function More({ size }: { size: any }) {
                 handleClose();
                 handleLogout();
               }}
-              onSetActive={() => handleSetActive("contact")}
+             
             >
               <div className="flex w-[100%]  sm:py-4">
                 <LogoutIcon
