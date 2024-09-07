@@ -11,16 +11,17 @@ const register = async (req, res) => {
     const userExist = await User.findOne({ email });
 
     if (!userExist) {
-      // Directly save the user without manual hashing
+      // Create a new user since no user with the email exists
       const user = new User({ email, password, username });
       await user.save();
-
       res.status(201).json({ message: "User registered successfully" });
     } else {
       if (userExist.googleId) {
-        const user = new User({ password, username });
-        await user.save();
-        res.status(201).json({ message: "User registered successfully" });
+        // Update the existing user's password and username
+        userExist.password = password;
+        userExist.username = username;
+        await userExist.save();
+        res.status(201).json({ message: "User updated successfully" });
       } else {
         res.status(400).json({ message: "User already exists!" });
       }
@@ -30,6 +31,7 @@ const register = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -68,6 +70,7 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
+  console.log("Cookies:", req.cookies);
   res.clearCookie("jwt", {
     expires: new Date(0),
     httpOnly: true,
@@ -82,7 +85,7 @@ const logout = (req, res) => {
  
 
 const checkLoginStatus = async (req, res) => {
-  console.log("Cookies:", req.cookies);
+
 
   const token = req.cookies.jwt;
   if (!token) {
