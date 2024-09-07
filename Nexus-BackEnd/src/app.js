@@ -12,7 +12,9 @@ require("./Database/conn");
 const { generateToken, verifyToken } = require("./utils/jwtUtils");
 
 app.use(cors({
-  origin: "https://chiefsoft.onrender.com", // Frontend domain
+
+   origin: "https://chiefsoft.onrender.com",  // Adjust origin based on your client
+
   methods: "GET,POST,PUT,DELETE",
   credentials: true,
 }));
