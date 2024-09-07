@@ -24,8 +24,7 @@ function LoginPage() {
   }
 
   const loginwithgoogle = async () => {
-window.location.href = "http://localhost:3000/auth/google";
-
+    window.location.href = "http://localhost:3000/auth/google";
   };
 
   return (
