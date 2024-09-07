@@ -85,6 +85,7 @@ const logout = (req, res) => {
 
 const checkLoginStatus = async (req, res) => {
 
+  console.log("Cookies request:", req.cookies);
 
   const token = req.cookies.jwt;
   if (!token) {
