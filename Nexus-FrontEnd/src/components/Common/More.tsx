@@ -235,7 +235,7 @@ function More({ size }: { size: any }) {
           <MenuItem  style={{ paddingBottom: "0px", paddingTop: "0px" }}>
             <Link
               className="w-full  "
-              to="contact"
+              to=""
               spy={true}
               smooth={true}
               duration={300}
@@ -248,7 +248,7 @@ function More({ size }: { size: any }) {
               <div className="flex w-[100%]  sm:py-4">
                 <LogoutIcon
                   className={
-                    activeLink === "contact" ? "text-black" : "text-[#585858]"
+                    activeLink === "" ? "text-black" : "text-[#585858]"
                   }
                 />
                 <p
