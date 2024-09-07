@@ -113,7 +113,7 @@ console.log(user)
     // Set the token as a cookie
     res.cookie("jwt", token, {
       httpOnly: true,
-      secure: false, // Set to true in production
+      secure: true, // Set to true in production
       sameSite: "lax",
       maxAge: 2592000000, // 30 days
     });
