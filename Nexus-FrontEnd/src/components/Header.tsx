@@ -261,7 +261,7 @@ function Header() {
                 onClick={() => {
                   handleLogout();
 
-                  window.location.reload();
+                 
                 }}
                 className={`${
                   moreSize == "large"
