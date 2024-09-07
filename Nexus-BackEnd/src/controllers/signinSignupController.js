@@ -95,11 +95,17 @@ const checkLoginStatus = async (req, res) => {
       return res.status(401).json({ message: "User not found" });
     }
 
+    // If username is empty, set it to the first word of displayName
+    let username = user.username;
+    if (!username && user.displayName) {
+      username = user.displayName.split(' ')[0]; // Take the first word of displayName
+    }
+
     res.status(200).json({
       message: "User is logged in",
       user: {
         email: user.email,
-        username: user.username,
+        username: username,
         subscribe: user.subscribe,
       },
     });
@@ -108,5 +114,6 @@ const checkLoginStatus = async (req, res) => {
     res.status(401).json({ message: "Invalid or expired token" });
   }
 };
+
 
 module.exports = { register, login, logout, checkLoginStatus };
