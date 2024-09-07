@@ -46,9 +46,8 @@ const login = async (req, res) => {
 
     // Compare the plain password with the hashed password stored in the database
     const passwordMatch = await bcrypt.compare(password, user.password);
-    console.log("Password:", password);
-    console.log("Stored Hash:", user.password);
-    console.log("Password Match:", passwordMatch);
+
+
 
     if (!passwordMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
@@ -77,7 +76,7 @@ const logout = (req, res) => {
     secure: true, // Ensure this is set to true in production
     sameSite: "none",
   });
-
+ console.log("After",req.cookie)
   res.status(200).json({ message: "Logged out successfully" });
 };
 
