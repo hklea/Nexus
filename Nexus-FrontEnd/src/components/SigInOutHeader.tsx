@@ -6,6 +6,7 @@ import {
 } from "../data/EntryPage/HeaderData";
 import { openInstagramPage, openTikTokPage } from "../utilities/EntryPage/CallingSocial";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/Icons/logo.png";
 
 function SigInOutHeader() {
     const [scrolledFromTop, ] = useState(false);
@@ -43,16 +44,16 @@ function SigInOutHeader() {
               : "bg-[#9BB5C8] h-20"
           }`}
         >
-          <a href="#" className="w-[30%] lg:w-[10%] ml-[10px]">
-            {/*The nexus Logo will be here */}
-            <img
-              src="https://res.cloudinary.com/thirus/image/upload/v1631988912/logos/chitchat-logo_pkpwwu.png"
-              alt="ChitChat Logo"
-              className={`h-8 transform origin-left transition duration-200 ${
-                scrolledFromTop ? "scale-75" : "scale-100"
-              }`}
-            />
-          </a>
+           <a href="#" className="w-[30%] lg:w-[10%] ml-[10px]">
+          {/*The ChiefSoft Logo will be here */}
+          <img
+            src={logo}
+            alt="ChitChat Logo"
+            className={`h-32 lg:h-36 whitespace-nowrap lg:min-w-32 lg:mt-2 transform origin-left transition duration-200 ${
+              scrolledFromTop ? "scale-75" : "scale-100"
+            }`}
+          />
+        </a>
   
        <div onClick={()=>{navigate("/")}} className=" md:text-[15px] text-[12px] flex cursor-pointer  text-white rounded-[50px] md:pl-5 md:pr-6 pl-3 pr-4 py-1  md:py-1 md:pb-2 bg-[#181818] hover:bg-black active:bg-[#000000]">
         <div > <HomeIcon fontSize="small"></HomeIcon></div>
