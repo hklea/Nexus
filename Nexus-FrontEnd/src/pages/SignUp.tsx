@@ -4,7 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SigInOutHeader from "../components/SigInOutHeader";
 import Transition from "../components/Common/Transition";
 import { register } from "../api/SigninsignupApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signupAuthentication } from "../utilities/Authentication/SigninSignup/Signinsignup";
 import Alert from "../components/Common/Alerts/Alert";
 
@@ -40,6 +40,10 @@ function SignUp() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
+
+  useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  },[])
 
   const loginwithgoogle = async () => {
     window.open("http://localhost:3000/auth/google/callback", "_self");
