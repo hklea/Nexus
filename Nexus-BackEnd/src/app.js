@@ -68,11 +68,20 @@ app.use(passport.session());
 // Google login route
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
+
+
+
 // Google callback route
 app.get("/auth/google/callback", passport.authenticate("google", {
   failureRedirect: "https://chiefsoft.onrender.com/login", // Redirect to React login page on failure
 }), (req, res) => {
-  console.log("is heruss")
+  res.cookie("jwt", req.user.token, {
+    httpOnly: true,
+    secure: true, // Set to true in production
+    sameSite: "none",
+    maxAge: 2592000000, // 30 days
+  });
+
   res.redirect("https://chiefsoft.onrender.com/"); // Redirect to React dashboard on success
 });
 
