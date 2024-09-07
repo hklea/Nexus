@@ -75,7 +75,6 @@ export const handleLogout = async () => {
     );
     console.log("data: ", data);
     localStorage.clear();
-    window.location.reload();
   } catch (error) {
     console.error("Error logging out: ", error);
   }
