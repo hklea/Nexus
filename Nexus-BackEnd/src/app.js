@@ -70,16 +70,16 @@ app.get("/auth/google/callback", async (req, res) => {
   const code = req.query.code;
   
   if (!code) {
-    return res.redirect("https://chiefsoft.onrender.com/login");
+    return res.redirect("https://chiefsoft.onrender.com/login"); // Adjust to your local login route
   }
-console.log("heeeeeeeeeereeeeeeeeee")
+
   try {
     // Exchange code for access token
     const { data } = await axios.post(`https://oauth2.googleapis.com/token`, {
       code,
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET,
-      redirect_uri: "https://nexus-express.onrender.com/auth/google/callback",
+      redirect_uri: "https://nexus-express.onrender.com/auth/google/callback", // Ensure this matches
       grant_type: "authorization_code",
     });
 
@@ -91,7 +91,7 @@ console.log("heeeeeeeeeereeeeeeeeee")
     );
 
     let user = await User.findOne({ email: profile.email });
-
+console.log(user)
     if (user) {
       user.googleId = user.googleId || profile.id;
       user.displayName = user.displayName || profile.name;
@@ -113,17 +113,18 @@ console.log("heeeeeeeeeereeeeeeeeee")
     // Set the token as a cookie
     res.cookie("jwt", token, {
       httpOnly: true,
-      secure: true, // Set to true in production
-      sameSite: "none",
+      secure: false, // Set to true in production
+      sameSite: "lax",
       maxAge: 2592000000, // 30 days
     });
 
-    res.redirect("https://chiefsoft.onrender.com/");
+    res.redirect("https://nexus-express.onrender.com/"); // Redirect to your local application
   } catch (error) {
     console.error("Error during authentication", error);
-    res.redirect("https://chiefsoft.onrender.com/login");
+    res.redirect("https://nexus-express.onrender.com/login"); // Adjust to your local login route
   }
 });
+
 
 app.get("/users", async (req, res) => {
   try {
