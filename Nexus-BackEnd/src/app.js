@@ -109,7 +109,7 @@ console.log(user)
 
     // Generate a JWT token
     const token = generateToken(user);
-
+    console.log("google cookies", req.cookies)
     // Set the token as a cookie
     res.cookie("jwt", token, {
       httpOnly: true,
@@ -117,7 +117,7 @@ console.log(user)
       sameSite: "none",
       maxAge: 2592000000, // 30 days
     });
-
+    console.log("google cookies", req.cookies)
     res.redirect("https://chiefsoft.onrender.com/"); // Redirect to your local application
   } catch (error) {
     console.error("Error during authentication", error);
