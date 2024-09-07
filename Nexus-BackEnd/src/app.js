@@ -118,10 +118,10 @@ console.log(user)
       maxAge: 2592000000, // 30 days
     });
 
-    res.redirect("https://nexus-express.onrender.com/"); // Redirect to your local application
+    res.redirect("https://chiefsoft.onrender.com/"); // Redirect to your local application
   } catch (error) {
     console.error("Error during authentication", error);
-    res.redirect("https://nexus-express.onrender.com/login"); // Adjust to your local login route
+    res.redirect("https://chiefsoft.onrender.com/login"); // Adjust to your local login route
   }
 });
 
