@@ -68,9 +68,14 @@ export async function status() {
 export const handleLogout = async () => {
   try {
     // Send a POST request to the server to log the user out
-   const data =  await AxiosInstance.post('/logout', {}, { withCredentials: true });
-    console.log("data: ", data)
+    const data = await AxiosInstance.post(
+      "/logout",
+      {},
+      { withCredentials: true }
+    );
+    console.log("data: ", data);
     localStorage.clear();
+    window.location.reload();
   } catch (error) {
     console.error("Error logging out: ", error);
   }

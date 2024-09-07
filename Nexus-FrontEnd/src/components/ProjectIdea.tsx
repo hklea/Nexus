@@ -23,7 +23,6 @@ function ProjectIdea() {
   }, [isReady]);
 
   const handleSubscribe = async () => {
-
     await subscribe();
     setSub((prevSub) => !prevSub);
   };
