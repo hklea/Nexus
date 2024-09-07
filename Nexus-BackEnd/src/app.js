@@ -2,32 +2,25 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-require("./Database/conn"); // Ensure this file connects to your database
-const cookieParser = require('cookie-parser'); // For handling cookies
+const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-const { verifyToken } = require("./utils/jwtUtils"); 
-const PORT = 3000;
+const axios = require('axios');
 const User = require('./models/userSchema');
-const passport = require('passport');
-const session = require("express-session");
-require('./config/passport')
-const OAuth2Strategy = require("passport-google-oauth2").Strategy;
+const PORT = 3000;
+require("./Database/conn"); 
 
-const { generateToken } = require("./utils/jwtUtils");
-
-
-
-
-
+const { generateToken, verifyToken } = require("./utils/jwtUtils");
 
 app.use(cors({
+
    origin: "https://chiefsoft.onrender.com",  // Adjust origin based on your client
+
   methods: "GET,POST,PUT,DELETE",
   credentials: true,
 }));
 
 app.use(express.json());
-app.use(cookieParser()); // Add this middleware to parse cookies
+app.use(cookieParser());
 
 // Middleware to verify JWT from cookies
 app.use((req, res, next) => {
@@ -43,106 +36,70 @@ app.use((req, res, next) => {
   next();
 });
 
+// Google login route
+app.get("/auth/google", (req, res) => {
+  const redirectUri = encodeURIComponent("https://nexus-express.onrender.com/auth/google/callback");
+  const googleAuthUrl = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirectUri}&scope=profile email`;
 
-
-
-app.use(session({
-  secret: process.env.SESSION_SECRET || "YOUR_SECRET_KEY",
-  resave: false,
-  saveUninitialized: true,
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-
-
-
-
-
-
-passport.use(
-  new OAuth2Strategy({
-      clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "/auth/google/callback",
-      scope: ["profile", "email"],
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        console.log("Profile: ", profile);
-        let user = await User.findOne({ email: profile.emails[0].value });
-        
-        if (user) {
-          user.googleId = user.googleId || profile.id;
-          user.displayName = user.displayName || profile.displayName;
-          user.image = user.image || profile.photos[0].value;
-          await user.save();
-        } else {
-          user = new User({
-            googleId: profile.id,
-            displayName: profile.displayName,
-            email: profile.emails[0].value,
-            image: profile.photos[0].value,
-          });
-          console.log("User is saved from google: ", user);
-          await user.save();
-        }
-
-        // Generate a JWT token
-        const token = generateToken(user);
-
-        // Set the token as a cookie
-        done(null, { user, token });
-      } catch (error) {
-        return done(error, null);
-      }
-    }
-  )
-);
-
-// Serialize user with the token
-passport.serializeUser((data, done) => {
-  done(null, { id: data.user._id, token: data.token });
+  res.redirect(googleAuthUrl);
 });
 
-passport.deserializeUser(async (data, done) => {
+// Google callback route
+app.get("/auth/google/callback", async (req, res) => {
+  const { code } = req.query;
   try {
-    const user = await User.findById(data.id);
-    done(null, user);
+    const tokenResponse = await axios.post(`https://oauth2.googleapis.com/token`, {
+      code,
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      redirect_uri: "https://nexus-express.onrender.com/auth/google/callback",
+      grant_type: 'authorization_code',
+    });
+
+    const { access_token } = tokenResponse.data;
+    const userInfoResponse = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`);
+
+    const { id, email, name, picture } = userInfoResponse.data;
+
+    let user = await User.findOne({ email });
+
+    if (user) {
+      user.googleId = user.googleId || id;
+      user.displayName = user.displayName || name;
+      user.image = user.image || picture;
+      await user.save();
+    } else {
+      user = new User({
+        googleId: id,
+        displayName: name,
+        email,
+        image: picture,
+      });
+      await user.save();
+    }
+
+    // Generate a JWT token
+    const token = generateToken(user);
+
+    // Set the token as a cookie
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: true, // Use HTTPS in production
+      sameSite: "none",
+      maxAge: 2592000000, // 30 days
+    });
+
+    res.redirect("https://chiefsoft.onrender.com/"); // Redirect to React dashboard on success
   } catch (error) {
-    done(error, null);
+    console.error("Error during Google authentication", error);
+    res.redirect("https://chiefsoft.onrender.com/login"); // Redirect to login on failure
   }
 });
 
-
-// Google login route
-app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-
-
-
-
-// Google callback route
-app.get("/auth/google/callback", passport.authenticate("google", {
-  failureRedirect: "https://chiefsoft.onrender.com/login", // Redirect to React login page on failure
-}), (req, res) => {
-  res.cookie("jwt", req.user.token, {
-    httpOnly: true,
-    secure: true, // Set to true in production
-    sameSite: "none",
-    maxAge: 2592000000, // 30 days
-  });
-console.log("hereeeeeee")
-  res.redirect("https://chiefsoft.onrender.com/"); // Redirect to React dashboard on success
-});
-
-
-
-
 app.get("/users", async (req, res) => {
   try {
-    const users = await User.find(); // Fetch all users from the database
-    res.status(200).json(users); // Send the users as a JSON response
+    const users = await User.find();
+    res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ message: "Internal Server Error" });
