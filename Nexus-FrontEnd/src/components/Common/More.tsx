@@ -253,7 +253,7 @@ function More({ size }: { size: any }) {
                 />
                 <p
                   className={`text-[12.3px] grid items-center text-start font-lato ml-[10px] ${
-                    activeLink === "contact"
+                    activeLink === ""
                       ? "text-black font-extrabold"
                       : "text-[#585858]"
                   }`}
