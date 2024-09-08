@@ -18,6 +18,7 @@ export const register = async (
       console.error("Registration failed with status code: " + result.status);
     }
   } catch (err: any) {
+       console.log("Err: ", err)
     if (err.response) {
       if (err.response.data.message == "User already exists!!!") {
         return 2;
