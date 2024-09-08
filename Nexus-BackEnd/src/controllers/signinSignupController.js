@@ -17,7 +17,7 @@ const register = async (req, res) => {
       res.status(201).json({ message: "User registered successfully" });
     } else {
       if (userExist.googleId) {
-        // Update the existing user's password and username
+        if(userExist.pa)
         userExist.password = password;
         userExist.username = username;
         await userExist.save();
