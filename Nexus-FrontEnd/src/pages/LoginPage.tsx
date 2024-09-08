@@ -24,7 +24,7 @@ function LoginPage() {
   }
 
   useEffect(()=>{
-
+    window.scrollTo({ top: 0, behavior: "smooth" });
   },[])
 
   const loginwithgoogle = async () => {

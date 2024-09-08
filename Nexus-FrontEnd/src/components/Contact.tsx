@@ -149,6 +149,7 @@ const Contact = () => {
       </div>
 
       <div className="mt-[3rem] lg:ml-[50px]">
+      <p className="text-red-600 text-[13px] lg:text-[16px] mb-2">* You can not send a message if you are not logged in!!!</p>
         <form onSubmit={handleSubmit}>
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4 md:w-1/2">
