@@ -4,36 +4,31 @@ const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
   const { email, password, username } = req.body;
-
+  console.log("Registration request body:", req.body);
   try {
-    console.log("Registration request body:", req.body);
-
     const userExist = await User.findOne({ email });
-
     if (!userExist) {
-      // Create a new user since no user with the email exists
       const user = new User({ email, password, username });
       await user.save();
-      res.status(201).json({ message: "User registered successfully" });
+      return res.status(201).json({ message: "User registered successfully" });
     } else {
       if (userExist.googleId) {
-        if(userExist.password){
-          res.status(400).json({ message: "User already exists!" });
+        if (userExist.password) {
+          return res.status(400).json({ message: "User already exists!!!" });
         }
         userExist.password = password;
         userExist.username = username;
         await userExist.save();
-        res.status(201).json({ message: "User updated successfully" });
+        return res.status(201).json({ message: "User updated successfully" });
       } else {
-        res.status(400).json({ message: "User already exists!" });
+        return res.status(400).json({ message: "User already exists!" });
       }
     }
   } catch (error) {
     console.error("Error during registration:", error);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -48,8 +43,6 @@ const login = async (req, res) => {
 
     // Compare the plain password with the hashed password stored in the database
     const passwordMatch = await bcrypt.compare(password, user.password);
-
-
 
     if (!passwordMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
@@ -76,21 +69,18 @@ const logout = (req, res) => {
       console.error("Error destroying session:", err);
       return res.status(500).json({ message: "Could not log out" });
     }
-  
+
     res.clearCookie("jwt", {
       httpOnly: true,
       secure: true,
       sameSite: "none",
     });
-  
+
     res.status(200).json({ message: "Logged out successfully" });
   });
-}
-
- 
+};
 
 const checkLoginStatus = async (req, res) => {
-
   console.log("Cookies request:", req.cookies);
 
   const token = req.cookies.jwt;
@@ -109,7 +99,7 @@ const checkLoginStatus = async (req, res) => {
     // If username is empty, set it to the first word of displayName
     let username = user.username;
     if (!username && user.displayName) {
-      username = user.displayName.split(' ')[0]; // Take the first word of displayName
+      username = user.displayName.split(" ")[0]; // Take the first word of displayName
     }
 
     res.status(200).json({
@@ -125,6 +115,5 @@ const checkLoginStatus = async (req, res) => {
     res.status(401).json({ message: "Invalid or expired token" });
   }
 };
-
 
 module.exports = { register, login, logout, checkLoginStatus };
