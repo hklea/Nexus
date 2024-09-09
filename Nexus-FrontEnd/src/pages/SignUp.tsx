@@ -46,7 +46,7 @@ function SignUp() {
   },[])
 
   const loginwithgoogle = async () => {
-    window.open("http://localhost:3000/auth/google/callback", "_self");
+   window.location.href = "https://nexus-express.onrender.com/auth/google";
   };
 
   return (
